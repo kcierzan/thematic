@@ -1,0 +1,11 @@
+name: nvim
+os_types:
+  - linux
+  - darwin
+origin_file: ".config/nvim/init.vim"
+output_file: "thematic-nvim.vim"
+template: |+
+  set background={{shade}}
+  colorscheme {{vim_colorscheme}}
+
+  {{vim_overrides}}

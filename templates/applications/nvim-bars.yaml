@@ -1,0 +1,45 @@
+name: nvim-bars
+os_types:
+  - linux
+  - darwin
+origin_file: ".config/nvim/init.vim"
+output_file: "thematic-nvim-bars.vim"
+template: |+
+  " " Left side items
+  " " =======================
+  set statusline+=%#MyStatuslineAccent#{{separators[0]}}
+  set statusline+=%#MyStatuslineAccentBody#
+  set statusline+=\
+  " " Filename
+  set statusline+=%#MyStatuslineFilename#\ %t
+  set statusline+=%#MyStatuslineSeparator#{{separators[1]}}\
+
+  " " Modified status
+  set statusline+=%#MyStatuslineModified#{{separators[0]}}
+  set statusline+=%#MyStatuslineModifiedBody#%{SetModifiedSymbol(&modified)}
+  set statusline+=%#MyStatuslineModified#{{separators[1]}}
+  " " Right side items
+  " " =======================
+  set statusline+=%=
+  set statusline+=%#MyStatuslineAccent#{{separators[0]}}
+  set statusline+=%#MyStatuslineAccentLabel#LS\
+  set statusline+=%#MyStatuslineLangServerError#%{ALEErrors()}
+  set statusline+=%#MyStatuslineLangServerWarning#%{ALEWarnings()}
+  set statusline+=%#MyStatuslineLangServerOk#%{ALEOk()}
+  set statusline+=%#MyStatuslineLineCol#{{separators[1]}}\
+
+  " Current directory
+  function! LightlineCwd()
+    return fnamemodify(getcwd(), ':t')
+  endfunction
+
+  set statusline+=%#MyStatuslineLineCol#{{separators[0]}}
+  set statusline+=%#MyStatuslineLineColBody#%{LightlineCwd()}
+  set statusline+=%#MyStatuslineLineCol#{{separators[1]}}
+  " " Padding
+  set statusline+=\
+  " " Filetype
+  set statusline+=%#MyStatuslineFiletype#{{separators[0]}}
+  set statusline+=%#MyStatuslineFiletypeBody#%{SetFiletype(&filetype)}
+  set statusline+=%#MyStatuslineFiletype#{{separators[1]}}\
+

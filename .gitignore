@@ -1,0 +1,14 @@
+output/
+__pycache__/
+build/
+dist/
+eggs/
+.eggs/
+lib/
+sdist/
+var/
+wheels/
+*.egg
+*.egg-info/
+.python-version
+*.pyc

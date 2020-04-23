@@ -1,0 +1,65 @@
+name: onedark
+colors:
+  - &fg       "#B2BED1"
+  - &bg0      "#282C34"
+  - &bg1      "#2C323D"
+  - &bg2      "#393f4a"
+  - &bg3      "#505868"
+  - &red      "#ff6c6b"
+  - &green    "#98C379"
+  - &yellow   "#ecbe7b"
+  - &blue     "#51afef"
+  - &magenta  "#c678dd"
+  - &cyan     "#46d9ff"
+  - &white    "#b9bfc9"
+  - &black2   "#6f7683"
+  - &red2     "#c9665b"
+  - &green2   "#62ac65"
+  - &yellow2  "#d9a97c"
+  - &blue2    "#71bdf2"
+  - &magenta2 "#a9a1e1"
+  - &cyan2    "#4db5bd"
+  - &white2   "#afb0b5"
+shade:             "dark"
+foreground:        *fg
+dark_bg:           *bg0
+light_bg:          *bg1
+lighter_bg:        *bg2
+lightest_bg:       *bg3
+tmux_mode_fg:      "#46D9FF"
+bat_theme:         "TwoDark"
+autosuggestions:   "238"
+xcolors_01:        *red
+xcolors_02:        *green
+xcolors_03:        *yellow
+xcolors_04:        *blue
+xcolors_05:        *magenta
+xcolors_06:        *cyan
+xcolors_07:        *white
+xcolors_08:        *black2
+xcolors_09:        *red2
+xcolors_10:        *green2
+xcolors_11:        *yellow2
+xcolors_12:        *blue2
+xcolors_13:        *magenta2
+xcolors_14:        *cyan2
+xcolors_15:        *white2
+vim_colorscheme:   "onedark"
+lightline_normal:  *green
+lightline_insert:  *blue
+lightline_replace: *red
+lightline_visual:  *magenta
+lightline_error:   *red
+lightline_warning: *yellow
+vim_overrides: |+
+  hi Normal ctermfg=none ctermbg=none guibg=none guifg=none
+  hi ColorColumn ctermfg=none ctermbg=0
+  hi ALEErrorSign                    guifg='#e06c75'
+  hi ALEWarningSign                  guifg='#e5c07b'
+  hi VertSplit guifg='#272c33'
+  hi Comment gui=italic
+  hi CocHighlightText guibg='#404754'
+  hi Search guifg='#46d9ff' guibg='#505868' gui=underline
+  hi Pmenu guibg='#2C323D'
+  hi PmenuSbar guibg = '#2C323D'
+  hi PmenuSel guibg='#c678dd'
