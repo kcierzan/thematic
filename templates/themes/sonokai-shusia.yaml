@@ -31,13 +31,15 @@ iterm_colors:
   ansi_4: *magenta
   ansi_5: *blue
   ansi_6: *cyan
-  ansi_7: *bg3
-  ansi_8: "#BA333A"
-  ansi_9: "#64af00"
-  ansi_10: "#e5c463"
-  ansi_11: "#7f74b4"
-  ansi_12: "#5b9fb4"
-  ansi_13: "#5b9fb4"
+  ansi_7: *white
+  ansi_8: *bg3
+  ansi_9: *red
+  ansi_10: *green2
+  ansi_11: *orange
+  ansi_12: *magenta
+  ansi_13: *green2
+  ansi_14: *cyan
+  ansi_15: *white2
 foreground:        *fg
 dark_bg:           *bg0
 light_bg:          *bg1
