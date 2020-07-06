@@ -1,2 +1,4 @@
 pyyaml
 Jinja2
+iterm2
+typer

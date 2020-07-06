@@ -20,7 +20,25 @@ colors:
   - &magenta2 "#a9a1e1"
   - &cyan2    "#4db5bd"
   - &white2   "#afb0b5"
-shade:             "dark"
+iterm_colors:
+  background: *bg0 
+  cursor: *cyan
+  cursor_text: *bg0
+  foreground: *fg
+  ansi_0: *bg2
+  ansi_1: *red
+  ansi_2: *green
+  ansi_3: *yellow
+  ansi_4: *magenta
+  ansi_5: *blue
+  ansi_6: *cyan
+  ansi_7: *bg3
+  ansi_8: *red2
+  ansi_9: *green2
+  ansi_10: *yellow2
+  ansi_11: *blue2
+  ansi_12: *magenta2
+  ansi_13: *cyan2
 foreground:        *fg
 dark_bg:           *bg0
 light_bg:          *bg1
@@ -44,13 +62,15 @@ xcolors_12:        *blue2
 xcolors_13:        *magenta2
 xcolors_14:        *cyan2
 xcolors_15:        *white2
-vim_colorscheme:   "onedark"
+vim_colorscheme:   "edge"
 lightline_normal:  *green
 lightline_insert:  *blue
 lightline_replace: *red
 lightline_visual:  *magenta
 lightline_error:   *red
 lightline_warning: *yellow
+vim_color_config: |+
+ set background=dark
 vim_overrides: |+
   hi Normal ctermfg=none ctermbg=none guibg=none guifg=none
   hi ColorColumn ctermfg=none ctermbg=0

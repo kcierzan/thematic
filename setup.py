@@ -14,7 +14,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     python_requires=">=3.7",
     zip_safe=False,
-    install_requires=["Jinja2", "pyyaml"],
+    install_requires=["Jinja2", "pyyaml", "iterm2", "typer", "neovim-remote"],
     entry_points={
         "console_scripts": ["theme=thematic.theme:main"]
     },

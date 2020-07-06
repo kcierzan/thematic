@@ -1,55 +1,96 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import argparse
 import os
 import pathlib
 import subprocess
 import sys
 
-import yaml
+import iterm2
 from jinja2 import Template
+import typer
+import yaml
 
-ENABLED_APPS = ["nvim", "zsh", "tmux", "rofi", "xcolors", "nvim-status"]
+ENABLED_APPS = ["nvim", "zsh", "tmux", "rofi", "xcolors", "nvim"]
+BARS = ["nvim", "tmux"]
+NVIM_SOCKET = "NVIM_LISTEN_ADDRESS"
 
 SEPARATORS = {
-    "rounded": ["", ""],
-    "right_slant": ["", ""],
-    "left_slant": ["", ""],
-    "fade": ["", ""],
-    "tabbed": ["", ""],
-    "diamond": ["", ""],
-    "trapezoid": ["", ""],
+    "rounded": ("", "", "", "", "", ""),
+    "slant_1": ("█", "", "", "", "", "█"),
+    "slant_2": ("", "", "", "", "", ""),
+    "fade": ("", "", "", "", "", ""),
+    "tabbed": ("", "", "", "", "", ""),
+    "diamond": ("█", "", "", "", "", "█"),
+    "trapezoid": ("█", "█", "█", "█", "█", "█"),
 }
+
+PACKAGE_DIR = pathlib.Path(__file__).parent.parent.resolve()
+THEME_DIR = os.path.join(PACKAGE_DIR, "templates/themes")
+APP_DIR = os.path.join(PACKAGE_DIR, "templates/applications")
+BAR_DIR = os.path.join(PACKAGE_DIR, "templates/bars")
+
+app = typer.Typer()
+
+
+def load_yaml(theme_file):
+    with open(theme_file, "r") as f:
+        try:
+            return yaml.safe_load(f)
+        except yaml.YAMLError as e:
+            print("Theme failed to load")
+            print(e)
+
+
+def get_theme_data(theme):
+    theme_file = os.path.join(THEME_DIR, theme + ".yaml")
+    return load_yaml(theme_file)
+
+
+def hex_to_rgb(hex):
+    hex = hex.lstrip("#")
+    hlen = len(hex)
+    return tuple(int(hex[i : i + hlen // 3], 16) for i in range(0, hlen, hlen // 3))
 
 
 class Renderer:
     def __init__(self):
         self.home_dir = os.path.expanduser("~")
-        package_dir = pathlib.Path(__file__).parent.parent.resolve()
-        app_dir = os.path.join(package_dir, "templates/applications")
         self.output_dir = os.path.join(self.home_dir, ".thematic")
-        self.theme_dir = os.path.join(package_dir, "templates/themes")
         self.app_files = [
-            os.path.join(app_dir, f)
-            for f in os.listdir(app_dir)
-            if os.path.isfile(os.path.join(app_dir, f))
+            os.path.join(APP_DIR, f)
+            for f in os.listdir(APP_DIR)
+            if os.path.isfile(os.path.join(APP_DIR, f))
+        ]
+        self.bar_files = [
+            os.path.join(BAR_DIR, f)
+            for f in os.listdir(BAR_DIR)
+            if os.path.isfile(os.path.join(BAR_DIR, f))
         ]
         self.themes = [
             f.split(".")[0]
-            for f in os.listdir(self.theme_dir)
-            if os.path.isfile(os.path.join(self.theme_dir, f))
+            for f in os.listdir(THEME_DIR)
+            if os.path.isfile(os.path.join(THEME_DIR, f))
         ]
 
-    def print_themes(self):
-        for f in self.themes:
-            print(f)
+    def set_bars(self, separator_type: str):
+        for bar_file in self.bar_files:
+            bar_data = load_yaml(bar_file)
+            if bar_data["name"] in BARS:
+                output_file = os.path.join(self.output_dir, bar_data["output_file"])
+                if sys.platform in bar_data["os_types"]:
+                    self.render_file(
+                        bar_data["template"],
+                        {"separators": SEPARATORS[separator_type]},
+                        output_file,
+                    )
+                    self.check_origin_file(
+                        bar_data["output_file"], bar_data["origin_file"]
+                    )
 
-    def render_themed_files(
-        self, theme, dry_run=True, separators=SEPARATORS["rounded"]
-    ):
-        theme_data = self.get_theme_data(theme)
+    def render_themed_files(self, theme, dry_run):
+        theme_data = get_theme_data(theme)
         for app_file in self.app_files:
-            app_data = self.load_yaml(app_file)
-            app_data["separators"] = separators
+            app_data = load_yaml(app_file)
             if app_data["name"] in ENABLED_APPS:
                 output_file = os.path.join(self.output_dir, app_data["output_file"])
                 if dry_run:
@@ -61,10 +102,6 @@ class Renderer:
                             app_data["output_file"], app_data["origin_file"]
                         )
 
-    def get_theme_data(self, theme):
-        theme_file = os.path.join(self.theme_dir, theme + ".yaml")
-        return self.load_yaml(theme_file)
-
     def check_origin_file(self, output_file, origin_file):
         with open(os.path.join(self.home_dir, origin_file), "r") as f:
             contents = f.read()
@@ -72,6 +109,10 @@ class Renderer:
                 print(
                     f"Please source {output_file} in {origin_file} for theme to take effect!"
                 )
+
+    def print_themes(self):
+        for f in self.themes:
+            print(f)
 
     @staticmethod
     def render_file(app_template, theme_data, output_path):
@@ -88,15 +129,6 @@ class Renderer:
         )
         print(temp.render(**theme_data))
 
-    @staticmethod
-    def load_yaml(theme_file):
-        with open(theme_file, "r") as f:
-            try:
-                return yaml.safe_load(f)
-            except yaml.YAMLError as e:
-                print(f"Theme failed to load")
-                print(e)
-
 
 class Shell:
     def __init__(self):
@@ -104,22 +136,46 @@ class Shell:
 
     def load_theme(self, theme):
         if self.platform == "darwin":
-            self.change_iterm_profile(theme)
+
+            async def wrapped(connection):
+                await self.change_iterm_colors(connection, theme)
+
+            iterm2.run_until_complete(wrapped)
             self.load_alfred_theme(theme)
         if self.platform == "linux":
             self.reload_xresources()
         self.reload_tmux()
+        self.reload_neovim()
 
-    def change_iterm_profile(self, theme):
-        template = "\e]1337;SetProfile={}\007"
-        if os.getenv("TMUX") or os.getenv("TERM").find("tmux") >= 0:
-            template = f"\ePtmux;\e{template}\e\\"
-        command = "echo -n " + "'" + template.format(theme) + "'"
-        self.call_with_shell(command)
+    async def change_iterm_colors(self, connection, theme):
+        app = await iterm2.async_get_app(connection)
+        session = app.current_window.current_tab.current_session
+        iterm_colors_hex = get_theme_data(theme).get("iterm_colors")
+        if session is not None:
+            profile = await session.async_get_profile()
+            for color_name, hex in iterm_colors_hex.items():
+                color = iterm2.Color(*hex_to_rgb(hex))
+                await getattr(profile, f"async_set_{color_name}_color")(color)
+
+    # FIXME: Does not work...iterm python API is still in beta...
+    def get_iterm_cookie(self):
+        command = ["osascript", "-e", 'tell application "iTerm2" to request cookie']
+        output = subprocess.Popen(command, shell=False, stdout=subprocess.PIPE)
+        output, _ = output.communicate()
+        os.environ["ITERM2_COOKIE"] = output.decode()
 
     def reload_tmux(self):
         command = "tmux source-file ~/.tmux.conf"
         self.call_with_shell(command)
+
+    def reload_neovim(self):
+        if not os.environ.get(NVIM_SOCKET):
+            typer.echo(f"${NVIM_SOCKET} env var not set! Neovim will not be reloaded.")
+            return
+
+        if os.path.exists(os.environ.get(NVIM_SOCKET)):
+            command = "nvr --nostart --remote-send ':so ~/.config/nvim/init.vim<CR>'"
+            self.call_with_shell(command)
 
     def load_alfred_theme(self, theme):
         command = [
@@ -141,38 +197,32 @@ class Shell:
         call_with_shell("xrdb merge " + os.expanduser("~") + "/.xresources")
 
 
-def parse_arguments(themes):
-    parser = argparse.ArgumentParser(description="Switch to a theme")
-    g = parser.add_mutually_exclusive_group()
-    g.add_argument("--list-themes", action="store_true")
-    g.add_argument(
-        "theme", type=str, nargs="?", metavar="THEME", choices=themes, help="theme name"
-    )
-    g.add_argument(
-        "separator",
-        type=str,
-        nargs="?",
-        metavar="SEPARATOR",
-        choices=SEPARATORS.keys(),
-        help="status bar separator type",
-    )
-    parser.add_argument("--dry-run", action="store_true")
-    return parser.parse_args()
+class NotImplementedError(Exception):
+    pass
 
 
-def main():
+@app.command()
+def set(theme: str, dry_run: bool = False):
+    typer.echo(f"Setting theme to {theme}...")
     renderer = Renderer()
     shell = Shell()
-    args = parse_arguments(renderer.themes)
+    renderer.render_themed_files(theme, dry_run=dry_run)
+    shell.load_theme(theme)
+    typer.echo("Theme loaded.")
 
-    if args.list_themes:
-        renderer.print_themes()
-        return
 
-    renderer.render_themed_files(args.theme, dry_run=args.dry_run)
-    if not args.dry_run:
-        shell.load_theme(args.theme)
+@app.command()
+def bars(separator_style: str):
+    typer.echo(f"Setting bars to {separator_style}...")
+    renderer = Renderer()
+    shell = Shell()
+    renderer.set_bars(separator_style)
+    shell.reload_tmux()
+    shell.reload_neovim()
+    typer.echo("Bars updated.")
 
+def main():
+    app()
 
 if __name__ == "__main__":
     main()

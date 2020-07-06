@@ -1,0 +1,13 @@
+name: tmux
+os_types:
+  - linux
+  - darwin
+origin_file: ".tmux.conf"
+output_file: "bars.conf"
+template: |+
+  FAR_LEFT_SEPARATOR="{{separators[0]}}"
+  LH_LEFT_SEPARATOR="{{separators[1]}}"
+  LH_RIGHT_SEPARATOR="{{separators[2]}}"
+  RH_LEFT_SEPARATOR="{{separators[3]}}"
+  RH_RIGHT_SEPARATOR="{{separators[4]}}"
+  FAR_RIGHT_SEPARATOR="{{separators[5]}}"

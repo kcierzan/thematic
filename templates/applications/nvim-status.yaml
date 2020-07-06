@@ -1,9 +1,9 @@
-name: nvim-status
+name: nvim
 os_types:
   - linux
   - darwin
 origin_file: ".config/nvim/init.vim"
-output_file: "thematic-nvim-status.vim"
+output_file: "status.vim"
 template: |+
   " Do not show mode under the statusline since the statusline itself changes
   " color depending on mode
@@ -16,21 +16,23 @@ template: |+
   let g:lightline.enable = {
     \  'statusline': 0
     \ }
+  set statusline=
   " ~~~~ Statusline configuration ~~~~
   " ':help statusline' is your friend!
   function! RedrawModeColors(mode)
     " Normal mode
     if a:mode == 'n'
-      hi MyStatuslineAccent guifg={{lightest_bg}}
+      hi MyStatuslineBackground guibg={{light_bg}}
+      hi MyStatuslineAccent guifg={{lightest_bg}} guibg={{light_bg}}
       hi MyStatuslineAccentBody  guibg={{lightest_bg}} guifg={{xcolors_04}}
       hi MyStatuslineAccentLabel guifg={{xcolors_02}} guibg={{lightest_bg}}
       hi MyStatuslineFilename  guibg={{lighter_bg}}
-      hi MyStatuslineSeparator guifg={{lighter_bg}}
-      hi MyStatuslineModified guifg={{lighter_bg}}
-      hi MyStatuslineFiletype guifg={{lighter_bg}}
+      hi MyStatuslineSeparator guifg={{lighter_bg}} guibg={{light_bg}}
+      hi MyStatuslineModified guifg={{lighter_bg}} guibg={{light_bg}}
+      hi MyStatuslineFiletype guifg={{lighter_bg}} guibg={{light_bg}}
       hi MyStatuslineFiletypeBody guibg={{lighter_bg}} guifg={{xcolors_05}}
 
-      hi MyStatuslineLineCol guifg={{lighter_bg}}
+      hi MyStatuslineLineCol guifg={{lighter_bg}} guibg={{light_bg}}
       hi MyStatuslineLineColBody guibg={{lighter_bg}}
       hi MyStatuslineLineCwd guifg={{xcolors_06}} guibg={{lighter_bg}}
       hi MyStatuslineLangServerWarning guibg={{lighter_bg}} guifg={{xcolors_03}}

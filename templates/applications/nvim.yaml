@@ -3,9 +3,9 @@ os_types:
   - linux
   - darwin
 origin_file: ".config/nvim/init.vim"
-output_file: "thematic-nvim.vim"
+output_file: "theme.vim"
 template: |+
-  set background={{shade}}
+  {{vim_color_config}}
   colorscheme {{vim_colorscheme}}
 
   {{vim_overrides}}

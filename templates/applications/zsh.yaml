@@ -2,11 +2,8 @@ name: zsh
 os_types:
   - linux
   - darwin
-origin_file: "zsh/.zshenv"
-output_file: "thematic-zsh"
+origin_file: ".zshenv"
+output_file: "theme.zsh"
 template: |+
   export BAT_THEME='{{bat_theme}}'
   export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg={{autosuggestions}}'
-
-
-
