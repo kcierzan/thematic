@@ -50,6 +50,7 @@ tmux_mode_fg:      "#46D9FF"
 bat_theme:         "TwoDark"
 autosuggestions:   "238"
 xcolors_01:        *red
+xcolors_01:        *red
 xcolors_02:        *green
 xcolors_03:        *yellow
 xcolors_04:        *blue
@@ -64,6 +65,7 @@ xcolors_12:        *blue2
 xcolors_13:        *magenta2
 xcolors_14:        *cyan2
 xcolors_15:        *white2
+ansi_0: 0
 vim_colorscheme:   "edge"
 lightline_normal:  *green
 lightline_insert:  *blue
@@ -75,7 +77,13 @@ vim_color_config: |+
  set background=dark
 vim_overrides: |+
   hi Normal ctermfg=none ctermbg=none guibg=none guifg=none
-  hi ColorColumn ctermfg=none ctermbg=0
+  hi SignColumn guibg=none
+  hi GitGutterAdd guibg=none
+  hi GitGutterChange guibg=none
+  hi GitGutterDelete guibg=none
+  hi ColorColumn ctermfg=none ctermbg=0 guibg='#2c323d'
+  hi CursorLineNr guibg='#2c323d'
+  hi CursorLine guibg='#2c323d'
   hi ALEErrorSign                    guifg='#e06c75'
   hi ALEWarningSign                  guifg='#e5c07b'
   hi VertSplit guifg='#272c33'

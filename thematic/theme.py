@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
+
 import argparse
+from enum import Enum
 import os
 import pathlib
 import subprocess
@@ -13,6 +15,34 @@ import yaml
 ENABLED_APPS = ["nvim", "zsh", "tmux", "rofi", "xcolors", "nvim"]
 BARS = ["nvim", "tmux"]
 NVIM_SOCKET = "NVIM_LISTEN_ADDRESS"
+
+FONTS = {
+    "jetbrains": {
+        "name": "JetBrainsMonoNerdFontCompleteM-Regular",
+        "horizontal_spacing": 1,
+    },
+    "cascadia": {"name": "CaskaydiaCoveNerdFontCompleteM-", "horizontal_spacing": 1},
+    "hack": {"name": "HackNerdFontCompleteM-Regular", "horizontal_spacing": 1},
+    "iosevka": {"name": "IosevkaNerdFontCompleteM-Term", "horizontal_spacing": 1},
+    "mononoki": {"name": "mononokiNerdFontCompleteM-Regular", "horizontal_spacing": 1},
+    "fira": {"name": "FiraCodeNerdFontCompleteM-Retina", "horizontal_spacing": 1},
+    "inconsolata": {
+        "name": "InconsolataLGCNerdFontCompleteM-",
+        "horizontal_spacing": 1,
+    },
+    "monoid": {"name": "MonoidNerdFontCompleteM-Retina", "horizontal_spacing": 1},
+    "victor": {"name": "VictorMonoNerdFontCompleteM-Medium", "horizontal_spacing": 1.1},
+    "imw": {
+        "name": "iMWritingMonoSNerdFontCompleteM-Regular",
+        "horizontal_spacing": 0.70,
+    },
+    "blex": {"name": "BlexMonoNerdFontCompleteM-Medium", "horizontal_spacing": 1},
+    "sauce": {"name": "SauceCodeProNerdFontCompleteM-Medium", "horizontal_spacing": 1},
+    "roboto": {
+        "name": "RobotoMonoNerdFontCompleteM-Regular",
+        "horizontal_spacing": 0.85,
+    },
+}
 
 SEPARATORS = {
     "rounded": ("", "", "", "", "", ""),
@@ -37,8 +67,8 @@ def load_yaml(theme_file):
         try:
             return yaml.safe_load(f)
         except yaml.YAMLError as e:
-            print("Theme failed to load")
-            print(e)
+            typer.echo("Theme failed to load")
+            typer.echo(e)
 
 
 def get_theme_data(theme):
@@ -106,13 +136,9 @@ class Renderer:
         with open(os.path.join(self.home_dir, origin_file), "r") as f:
             contents = f.read()
             if contents.find(output_file) < 0:
-                print(
+                typer.echo(
                     f"Please source {output_file} in {origin_file} for theme to take effect!"
                 )
-
-    def print_themes(self):
-        for f in self.themes:
-            print(f)
 
     @staticmethod
     def render_file(app_template, theme_data, output_path):
@@ -124,10 +150,10 @@ class Renderer:
     @staticmethod
     def log_output(app_template, theme_data, output_file):
         temp = Template(app_template)
-        print(
+        typer.echo(
             f"*********************** Rendering to '{output_file}' ***********************"
         )
-        print(temp.render(**theme_data))
+        typer.echo(temp.render(**theme_data))
 
 
 class Shell:
@@ -147,15 +173,24 @@ class Shell:
         self.reload_tmux()
         self.reload_neovim()
 
-    async def change_iterm_colors(self, connection, theme):
+    async def get_iterm_profile(self, connection):
         app = await iterm2.async_get_app(connection)
         session = app.current_window.current_tab.current_session
-        iterm_colors_hex = get_theme_data(theme).get("iterm_colors")
         if session is not None:
             profile = await session.async_get_profile()
-            for color_name, hex in iterm_colors_hex.items():
-                color = iterm2.Color(*hex_to_rgb(hex))
-                await getattr(profile, f"async_set_{color_name}_color")(color)
+            return profile
+
+    async def change_iterm_colors(self, connection, theme):
+        profile = await self.get_iterm_profile(connection)
+        iterm_colors_hex = get_theme_data(theme).get("iterm_colors")
+        for color_name, hex in iterm_colors_hex.items():
+            color = iterm2.Color(*hex_to_rgb(hex))
+            await getattr(profile, f"async_set_{color_name}_color")(color)
+
+    async def change_iterm_font(self, connection, font):
+        profile = await self.get_iterm_profile(connection)
+        await profile.async_set_normal_font(f"{FONTS[font]['name']} 15")
+        await profile.async_set_horizontal_spacing(FONTS[font]["horizontal_spacing"])
 
     # FIXME: Does not work...iterm python API is still in beta...
     def get_iterm_cookie(self):
@@ -203,8 +238,13 @@ class NotImplementedError(Exception):
 
 @app.command()
 def set(theme: str, dry_run: bool = False):
-    typer.echo(f"Setting theme to {theme}...")
     renderer = Renderer()
+    if theme not in renderer.themes:
+        typer.echo(f"Theme '{theme}' not found. Enter one of the following:")
+        for theme in renderer.themes:
+            typer.echo(theme)
+        return
+    typer.echo(f"Setting theme to {theme}...")
     shell = Shell()
     renderer.render_themed_files(theme, dry_run=dry_run)
     shell.load_theme(theme)
@@ -213,6 +253,11 @@ def set(theme: str, dry_run: bool = False):
 
 @app.command()
 def bars(separator_style: str):
+    if separator_style not in SEPARATORS.keys():
+        typer.echo(f"Bar '{separator_style}' not found. Enter one of the following:")
+        for bar in SEPARATORS.keys():
+            typer.echo(bar)
+        return
     typer.echo(f"Setting bars to {separator_style}...")
     renderer = Renderer()
     shell = Shell()
@@ -221,8 +266,46 @@ def bars(separator_style: str):
     shell.reload_neovim()
     typer.echo("Bars updated.")
 
+
+@app.command()
+def font(font: str):
+    if font not in FONTS.keys():
+        typer.echo(f"Font '{font}' not found. Enter one of the following:")
+        for font in FONTS.keys():
+            typer.echo(font)
+        return
+    typer.echo(f"Setting font to {font}...")
+    shell = Shell()
+
+    async def wrapped(connection):
+        await shell.change_iterm_font(connection, font)
+
+    iterm2.run_until_complete(wrapped)
+    typer.echo("Font updated.")
+
+
+@app.command()
+def list(option: str):
+    if option == "fonts":
+        typer.echo("Available fonts:")
+        for font in FONTS.keys():
+            typer.echo(font)
+    elif option == "themes":
+        renderer = Renderer()
+        typer.echo("Available themes:")
+        for theme in renderer.themes:
+            typer.echo(theme)
+    elif option == "bars":
+        typer.echo("Available bars:")
+        for separator in SEPARATORS.keys():
+            typer.echo(separator)
+    else:
+        typer.echo(f"Invalid option: '{option}'. Enter 'fonts', 'themes', or 'bars'.")
+
+
 def main():
     app()
+
 
 if __name__ == "__main__":
     main()

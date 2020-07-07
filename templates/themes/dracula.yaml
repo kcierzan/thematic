@@ -3,58 +3,83 @@
 #  / __  / ___/ __ `/ ___/ / / / / __ `/
 # / /_/ / /  / /_/ / /__/ /_/ / / /_/ /
 # \__,_/_/   \__,_/\___/\__,_/_/\__,_/
-
-# Base16 Colors
-
-# foreground:     #f9f9f4
-# background:     #272936
-# black:          #2e3140
-# red:            #ff6d67
-# green:          #59f68d
-# yellow:         #f3f89d
-# blue:           #c9a8fa
-# magenta:        #ff92d0
-# cyan:           #99ecfd
-# white:          #c7c7c7
-# bright black:   #676767
-# bright red:     #ff6d67
-# bright green:   #59f68d
-# bright yellow:  #f3f89d
-# bright blue:    #c9a8fa
-# bright magenta: #ff92d0
-# bright cyan:    #99ecfd
-# bright white:   #feffff
-
-shade:           "dark"
-dark_bg:         "#272936"
-light_bg:        "#2e3140"
-# TODO: fix me
-lighter_bg:      "#2e3140"
-lightest_bg:     "#676767"
-tmux_mode_bg:    "#505868"
-tmux_mode_fg:    "#c9a8fa"
+name: dracula
+colors:
+  - &fg      '#f9f9f4'
+  - &bg0     '#272936'
+  - &bg1     '#313446'
+  - &bg2     '#474b64'
+  - &bg3     '#555a78'
+  - &red2    '#473536'
+  - &cyan    '#99ecfd'
+  - &blue    '#c9a8fa'
+  - &blue2   '#7ad5f1'
+  - &orange  '#ef9062'
+  - &yellow  '#f3f89d'
+  - &green   '#59f68d'
+  - &black   '#2e3140'
+  - &black2  '#1A181A'
+  - &magenta '#ff92d0'
+  - &red     '#ff6d67'
+  - &green2  '#59f68d'
+  - &white   '#c7c7c7'
+  - &white2  '#feffff'
+iterm_colors:
+  background: *bg0
+  cursor: *cyan
+  cursor_text: *bg0
+  foreground: *fg
+  ansi_0: *black
+  ansi_1: *red
+  ansi_2: *green
+  ansi_3: *orange
+  ansi_4: *magenta
+  ansi_5: *blue
+  ansi_6: *cyan
+  ansi_7: *white
+  ansi_8: *bg3
+  ansi_9: *red
+  ansi_10: *green2
+  ansi_11: *orange
+  ansi_12: *magenta
+  ansi_13: *green2
+  ansi_14: *cyan
+  ansi_15: *white2
+dark_bg:         *bg0
+light_bg:        *bg1
+lighter_bg:      *bg2
+lightest_bg:     *bg3
+tmux_mode_fg:    *blue
 bat_theme:       "Dracula"
 autosuggestions: "238"
-xcolors_01:      "#ff6d67"
-xcolors_02:      "#59f68d"
-xcolors_03:      "#f3f89d"
-xcolors_04:      "#c9a8fa"
-xcolors_05:      "#ff92d0"
-xcolors_06:      "#99ecfd"
-xcolors_07:      "#c7c7c7"
-xcolors_08:      "#676767"
-xcolors_09:      "#ff6d67"
-xcolors_10:      "#59f68d"
-xcolors_11:      "#f3f89d"
-xcolors_12:      "#c9a8fa"
-xcolors_13:      "#ff92d0"
-xcolors_14:      "#99ecfd"
-xcolors_15:      "#feffff"
+xcolors_01:        *red
+xcolors_02:        *green
+xcolors_03:        *yellow
+xcolors_04:        *blue
+xcolors_05:        *magenta
+xcolors_06:        *cyan
+xcolors_07:        *white
+xcolors_08:        *black2
+xcolors_09:        *orange
+xcolors_10:        *green2
+xcolors_11:        *orange
+xcolors_12:        *blue2
+xcolors_13:        *magenta
+xcolors_14:        *cyan
+xcolors_15:        *white2
 vim_colorscheme: "dracula"
+lightline_normal:  *green
+lightline_insert:  *blue
+lightline_replace: *red
+lightline_visual:  *magenta
+lightline_error:   *red
+lightline_warning: *yellow
+vim_color_config: |+
+ set background=dark
 vim_overrides: |+
   hi Normal ctermfg=none ctermbg=none guibg=none guifg=none
-  hi SignColumn ctermfg=none ctermbg=none guibg=none guifg=none
-  hi ColorColumn ctermfg=none ctermbg=0 guibg='#2e3140'
+  hi ColorColumn ctermfg=none ctermbg=0 guibg='#313446'
   hi Cursorline guifg=none guibg='#2e3140'
+  hi CursorlineNr guibg='#2e3140'
   hi VertSplit guibg = '#272936' guifg = '#272936'
   hi Cursor guibg='#ff92d0' guifg='#272936'

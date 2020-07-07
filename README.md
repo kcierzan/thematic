@@ -24,7 +24,7 @@ applications Thematic supports.
 ## Themes
 
 ### Dracula
-### Monokai
+### Sonokai-shusia
 ### Solarized (light & dark variants)
 ### Spacemacs
 ### OneDark
@@ -34,7 +34,7 @@ applications Thematic supports.
 pip install thematic
 ```
 ```sh
-theme sonokai
+theme sonokai-shusia
 ```
 
 ## Gotchas
@@ -46,10 +46,7 @@ requires some initial envionrment setup.
   existing Alfred 4 theme configured that has the same name as a
   Thematic theme
 
-2. For iTerm2 theme changing to work properly, you must have an
-  existing iTerm2 profile with the same name as a Thematic theme
-
-3. Neovim themeing requires the following colorschemes be installed:
+2. Neovim themeing requires the following colorschemes be installed:
   1. [solarized8](https://github.com/lifepillar/vim-solarized8)
   2. [space-vim-theme](https://github.com/liuchengxu/space-vim-theme)
   3. [vim-monokai-tasty](https://github.com/patstockwell/vim-monokai-tasty)
