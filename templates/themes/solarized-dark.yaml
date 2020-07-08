@@ -1,17 +1,71 @@
+name: solarized-dark
+colors:
+  - &bg0     '#002b36'
+  - &bg1     '#003240'
+  - &bg2     '#003a4a'
+  - &bg3     '#004154'
+  - &black   '#073642'
+  - &black2  '#1A181A'
+  - &blue    '#268bd2'
+  - &blue2   '#839496'
+  - &cyan    '#2aa198'
+  - &cyan2   '#93a1a1'
+  - &fg      '#839496'
+  - &green   '#859900'
+  - &green2  '#586e75'
+  - &magenta '#d33682'
+  - &magenta2 '#6c71c4'
+  - &orange  '#cb4b16'
+  - &red     '#dc322f'
+  - &red2    '#cb4b16'
+  - &white   '#eee8d5'
+  - &white2  '#fdf6e3'
+  - &yellow  '#b58900'
+iterm_colors:
+  background: *bg0
+  cursor: *magenta2
+  cursor_text: *bg0
+  foreground: *fg
+  ansi_0: *black
+  ansi_1: *red
+  ansi_2: *green
+  ansi_3: *orange
+  ansi_4: *blue
+  ansi_5: *magenta
+  ansi_6: *cyan
+  ansi_7: *white
+  ansi_8: *bg3
+  ansi_9: *red
+  ansi_10: *green2
+  ansi_11: *orange
+  ansi_12: *blue
+  ansi_13: *magenta2
+  ansi_14: *cyan2
+  ansi_15: *white2
+xcolors_01:        *red
+xcolors_02:        *green
+xcolors_03:        *yellow
+xcolors_04:        *blue
+xcolors_05:        *magenta
+xcolors_06:        *cyan
+xcolors_07:        *white
+xcolors_08:        *black2
+xcolors_09:        *orange
+xcolors_10:        *green2
+xcolors_11:        *orange
+xcolors_12:        *blue2
+xcolors_13:        *magenta
+xcolors_14:        *cyan
+xcolors_15:        *white2
+foreground:        *fg
+dark_bg:           *bg0
+light_bg:          *bg1
+lighter_bg:        *bg2
+lightest_bg:       *bg3
+tmux_mode_fg:      *yellow
 shade: "dark"
-dark_bg: "#073642"
-light_bg: "#002b36"
 bat_theme: "SolarizedDark"
 autosuggestions: "238"
-vim_colorscheme: "solarized8"
-vim_overrides: |+
-  hi SignColumn guibg = '#002b36'
-  hi Normal guibg=none guifg=none
-  hi LineNr guibg = '#002b36'
-  hi VertSplit guibg = '#002b36' guifg = '#002b36'
-  hi GitGutterAdd guibg = '#002b36' guifg = '#859900'
-  hi GitGutterChange guibg = '#002b36' guifg = '#b58900'
-  hi GitGutterDeleteLine guibg = '#002b36' guifg = '#cb4b16'
-  hi GitGutterDelete guibg = '#002b36' guifg = '#cb4b16'
-  hi GitGutterChangeDeleteLine guibg = '#002b36' guifg = '#cb4b16'
-  hi GitGutterChangeDeleteLine guibg = '#002b36' guifg = '#cb4b16'
+vim_colorscheme: "solarized8_flat"
+vim_color_config: |+
+ set background=dark
