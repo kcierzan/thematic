@@ -65,7 +65,6 @@ xcolors_12:        *blue2
 xcolors_13:        *magenta2
 xcolors_14:        *cyan2
 xcolors_15:        *white2
-ansi_0: 0
 vim_colorscheme:   "edge"
 lightline_normal:  *green
 lightline_insert:  *blue
@@ -77,6 +76,7 @@ vim_color_config: |+
  set background=dark
 vim_overrides: |+
   hi Normal ctermfg=none ctermbg=none guibg=none guifg=none
+  hi EndOfBuffer ctermfg=none ctermbg=none guibg=none guifg=none
   hi SignColumn guibg=none
   hi GitGutterAdd guibg=none
   hi GitGutterChange guibg=none
