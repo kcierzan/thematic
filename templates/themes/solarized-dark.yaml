@@ -63,7 +63,6 @@ light_bg:          *bg1
 lighter_bg:        *bg2
 lightest_bg:       *bg3
 tmux_mode_fg:      *yellow
-shade: "dark"
 bat_theme: "SolarizedDark"
 autosuggestions: "238"
 vim_colorscheme: "solarized8_flat"

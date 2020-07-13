@@ -1,4 +1,47 @@
-shade: "light"
+name: solarized-light
+colors:
+  - &bg0     '#002b36'
+  - &bg1     '#003240'
+  - &bg2     '#003a4a'
+  - &bg3     '#004154'
+  - &black   '#073642'
+  - &black2  '#1A181A'
+  - &blue    '#268bd2'
+  - &blue2   '#839496'
+  - &cyan    '#2aa198'
+  - &cyan2   '#93a1a1'
+  - &fg      '#839496'
+  - &green   '#859900'
+  - &green2  '#586e75'
+  - &magenta '#d33682'
+  - &magenta2 '#6c71c4'
+  - &orange  '#cb4b16'
+  - &red     '#dc322f'
+  - &red2    '#cb4b16'
+  - &white   '#eee8d5'
+  - &white2  '#fdf6e3'
+  - &yellow  '#b58900'
+iterm_colors:
+  background: *bg0
+  cursor: *magenta2
+  cursor_text: *bg0
+  foreground: *fg
+  ansi_0: *black
+  ansi_1: *red
+  ansi_2: *green
+  ansi_3: *orange
+  ansi_4: *blue
+  ansi_5: *magenta
+  ansi_6: *cyan
+  ansi_7: *white
+  ansi_8: *bg3
+  ansi_9: *red
+  ansi_10: *green2
+  ansi_11: *orange
+  ansi_12: *blue
+  ansi_13: *magenta2
+  ansi_14: *cyan2
+  ansi_15: *white2
 dark_bg: "#EEE8D5"
 light_bg: "#FDF6E3"
 bat_theme: "SolarizedLight"
