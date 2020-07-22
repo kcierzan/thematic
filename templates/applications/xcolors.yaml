@@ -3,6 +3,10 @@ os_types:
   - linux
 origin_file: ".xresources"
 output_file: ".thematic-xcolors"
+source:
+  command: "#include"
+  with_quotes: true
+  source_at_index: -4
 template: |+
   ! █▓▒░ xcolors
 

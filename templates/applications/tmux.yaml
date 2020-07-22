@@ -4,6 +4,10 @@ os_types:
   - darwin
 origin_file: ".tmux.conf"
 output_file: "theme.conf"
+source:
+  command: "source-file"
+  with_quotes: false
+  source_at_index: -3
 template: |+
   set -g status-position bottom
   set -g status-justify "left"

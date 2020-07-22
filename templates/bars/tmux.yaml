@@ -4,6 +4,10 @@ os_types:
   - darwin
 origin_file: ".tmux.conf"
 output_file: "bars.conf"
+source:
+  command: "source-file"
+  with_quotes: false
+  source_at_index: -4
 template: |+
   FAR_LEFT_SEPARATOR="{{separators[0]}}"
   LH_LEFT_SEPARATOR="{{separators[1]}}"

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import argparse
-from enum import Enum
 import os
 import pathlib
 import subprocess
@@ -113,11 +112,10 @@ class Renderer:
                         {"separators": SEPARATORS[separator_type]},
                         output_file,
                     )
-                    self.check_origin_file(
-                        bar_data["output_file"], bar_data["origin_file"]
-                    )
+                    self.maybe_source_generated_file(bar_data)
 
     def render_themed_files(self, theme, dry_run):
+        self.maybe_create_output_directory()
         theme_data = get_theme_data(theme)
         for app_file in self.app_files:
             app_data = load_yaml(app_file)
@@ -128,17 +126,43 @@ class Renderer:
                 else:
                     if sys.platform in app_data["os_types"]:
                         self.render_file(app_data["template"], theme_data, output_file)
-                        self.check_origin_file(
-                            app_data["output_file"], app_data["origin_file"]
-                        )
+                        self.maybe_source_generated_file(app_data)
 
-    def check_origin_file(self, output_file, origin_file):
-        with open(os.path.join(self.home_dir, origin_file), "r") as f:
-            contents = f.read()
-            if contents.find(output_file) < 0:
+    def maybe_create_output_directory(self):
+        output_dir = f"{self.home_dir}/.thematic"
+        if not os.path.isdir(output_dir):
+            typer.echo(
+                f"Output directory not found: creating directory at {output_dir}"
+            )
+            try:
+                os.mkdir(output_dir)
+            except Exception as e:
+                typer.echo("Error creating output directory: {}".format(e))
+
+    def maybe_source_generated_file(self, app_data):
+        with open(os.path.join(self.home_dir, app_data["origin_file"]), "r+") as f:
+            lines = f.readlines()
+            sourced = False
+            for line in lines:
+                if line.find(app_data["output_file"]) > 0:
+                    sourced = True
+                    break
+
+            if not sourced:
+                f.seek(0)
+                output_file = f"{self.output_dir}/{app_data['output_file']}"
+                line = "{} {}".format(app_data["source"]["command"], output_file)
+                if app_data["source"]["with_quotes"]:
+                    line = '{} "{}"'.format(app_data["source"]["command"], output_file)
+                line += "\n"
                 typer.echo(
-                    f"Please source {output_file} in {origin_file} for theme to take effect!"
+                    f"Editing {app_data['origin_file']} to source {output_file}!"
                 )
+                if (app_data["source"]["source_at_index"]) == -1:
+                    lines.write(line)
+
+                lines.insert(app_data["source"]["source_at_index"], line)
+                f.writelines(lines)
 
     @staticmethod
     def render_file(app_template, theme_data, output_path):
@@ -191,13 +215,6 @@ class Shell:
         profile = await self.get_iterm_profile(connection)
         await profile.async_set_normal_font(f"{FONTS[font]['name']} 15")
         await profile.async_set_horizontal_spacing(FONTS[font]["horizontal_spacing"])
-
-    # FIXME: Does not work...iterm python API is still in beta...
-    def get_iterm_cookie(self):
-        command = ["osascript", "-e", 'tell application "iTerm2" to request cookie']
-        output = subprocess.Popen(command, shell=False, stdout=subprocess.PIPE)
-        output, _ = output.communicate()
-        os.environ["ITERM2_COOKIE"] = output.decode()
 
     def reload_tmux(self):
         command = "tmux source-file ~/.tmux.conf"
