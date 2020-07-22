@@ -304,16 +304,13 @@ def font(font: str):
 @app.command()
 def list(option: str):
     if option == "fonts":
-        typer.echo("Available fonts:")
         for font in FONTS.keys():
             typer.echo(font)
     elif option == "themes":
         renderer = Renderer()
-        typer.echo("Available themes:")
         for theme in renderer.themes:
             typer.echo(theme)
     elif option == "bars":
-        typer.echo("Available bars:")
         for separator in SEPARATORS.keys():
             typer.echo(separator)
     else:
