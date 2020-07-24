@@ -1,0 +1,27 @@
+{
+    "jetbrains": {
+        "name": "JetBrainsMonoNerdFontCompleteM-Regular",
+        "horizontal_spacing": 1
+    },
+    "cascadia": {"name": "CaskaydiaCoveNerdFontCompleteM-", "horizontal_spacing": 1},
+    "hack": {"name": "HackNerdFontCompleteM-Regular", "horizontal_spacing": 1},
+    "iosevka": {"name": "IosevkaNerdFontCompleteM-Term", "horizontal_spacing": 1},
+    "mononoki": {"name": "mononokiNerdFontCompleteM-Regular", "horizontal_spacing": 1},
+    "fira": {"name": "FiraCodeNerdFontCompleteM-Retina", "horizontal_spacing": 1},
+    "inconsolata": {
+        "name": "InconsolataLGCNerdFontCompleteM-",
+        "horizontal_spacing": 1
+    },
+    "monoid": {"name": "MonoidNerdFontCompleteM-Retina", "horizontal_spacing": 1},
+    "victor": {"name": "VictorMonoNerdFontCompleteM-Medium", "horizontal_spacing": 1.1},
+    "imw": {
+        "name": "iMWritingMonoSNerdFontCompleteM-Regular",
+        "horizontal_spacing": 0.70
+    },
+    "blex": {"name": "BlexMonoNerdFontCompleteM-Medium", "horizontal_spacing": 1},
+    "sauce": {"name": "SauceCodeProNerdFontCompleteM-Medium", "horizontal_spacing": 1},
+    "roboto": {
+        "name": "RobotoMonoNerdFontCompleteM-Regular",
+        "horizontal_spacing": 0.85
+    }
+}

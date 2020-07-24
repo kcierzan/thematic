@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import json
 import os
 import pathlib
 import subprocess
@@ -15,48 +16,17 @@ ENABLED_APPS = ["nvim", "zsh", "tmux", "rofi", "xcolors", "nvim"]
 BARS = ["nvim", "tmux"]
 NVIM_SOCKET = "NVIM_LISTEN_ADDRESS"
 
-FONTS = {
-    "jetbrains": {
-        "name": "JetBrainsMonoNerdFontCompleteM-Regular",
-        "horizontal_spacing": 1,
-    },
-    "cascadia": {"name": "CaskaydiaCoveNerdFontCompleteM-", "horizontal_spacing": 1},
-    "hack": {"name": "HackNerdFontCompleteM-Regular", "horizontal_spacing": 1},
-    "iosevka": {"name": "IosevkaNerdFontCompleteM-Term", "horizontal_spacing": 1},
-    "mononoki": {"name": "mononokiNerdFontCompleteM-Regular", "horizontal_spacing": 1},
-    "fira": {"name": "FiraCodeNerdFontCompleteM-Retina", "horizontal_spacing": 1},
-    "inconsolata": {
-        "name": "InconsolataLGCNerdFontCompleteM-",
-        "horizontal_spacing": 1,
-    },
-    "monoid": {"name": "MonoidNerdFontCompleteM-Retina", "horizontal_spacing": 1},
-    "victor": {"name": "VictorMonoNerdFontCompleteM-Medium", "horizontal_spacing": 1.1},
-    "imw": {
-        "name": "iMWritingMonoSNerdFontCompleteM-Regular",
-        "horizontal_spacing": 0.70,
-    },
-    "blex": {"name": "BlexMonoNerdFontCompleteM-Medium", "horizontal_spacing": 1},
-    "sauce": {"name": "SauceCodeProNerdFontCompleteM-Medium", "horizontal_spacing": 1},
-    "roboto": {
-        "name": "RobotoMonoNerdFontCompleteM-Regular",
-        "horizontal_spacing": 0.85,
-    },
-}
-
-SEPARATORS = {
-    "rounded": ("", "", "", "", "", ""),
-    "slant_1": ("█", "", "", "", "", "█"),
-    "slant_2": ("", "", "", "", "", ""),
-    "fade": ("", "", "", "", "", ""),
-    "tabbed": ("", "", "", "", "", ""),
-    "diamond": ("█", "", "", "", "", "█"),
-    "trapezoid": ("█", "█", "█", "█", "█", "█"),
-}
-
 PACKAGE_DIR = pathlib.Path(__file__).parent.parent.resolve()
 THEME_DIR = os.path.join(PACKAGE_DIR, "templates/themes")
 APP_DIR = os.path.join(PACKAGE_DIR, "templates/applications")
 BAR_DIR = os.path.join(PACKAGE_DIR, "templates/bars")
+DATA_DIR = os.path.join(PACKAGE_DIR, "templates/data")
+
+with open(f"{DATA_DIR}/separators.json") as f:
+    SEPARATORS = json.load(f)
+
+with open(f"{DATA_DIR}/fonts.json") as f:
+    FONTS = json.load(f)
 
 app = typer.Typer()
 
