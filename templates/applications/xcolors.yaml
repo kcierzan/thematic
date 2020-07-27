@@ -1,17 +1,20 @@
 name: xcolors
 os_types:
   - linux
-origin_file: ".xresources"
+origin_file: ".Xresources"
 output_file: ".thematic-xcolors"
 source:
   command: "#include"
   with_quotes: true
-  source_at_index: -4
+  source_at_index: -1
 template: |+
-  ! █▓▒░ xcolors
+  ! █▓▒░ thematic xcolors
 
+  st.alpha: 1
   ! st fg and bg
-  *.color257: #{{foreground}}
+  *.foreground: {{foreground}}
+  *.background: {{dark_bg}}
+  *.color257: {{foreground}}
   *.color256: {{dark_bg}}
 
   ! black
