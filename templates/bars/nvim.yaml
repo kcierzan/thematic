@@ -7,7 +7,7 @@ output_file: "bars.vim"
 source:
   command: "source"
   with_quotes: false
-  source_at_index: -1
+  source_at_index: -2
 template: |+
   " Left side items
   " =======================
