@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
     name="thematic",
-    version="0.0.1",
+    version="0.1.0",
     description="A total environment themer",
     long_description=long_description,
     url="https://gitlab.com/kcierzan/thematic",
@@ -14,8 +14,12 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     python_requires=">=3.7",
     zip_safe=False,
-    install_requires=["Jinja2", "pyyaml", "iterm2", "typer", "neovim-remote"],
-    entry_points={
-        "console_scripts": ["theme=thematic.theme:main"]
-    },
+    install_requires=[
+        "Jinja2",
+        "pyyaml",
+        "typer",
+        "neovim-remote",
+        "iterm2; sys_platform == 'darwin'",
+    ],
+    entry_points={"console_scripts": ["theme=thematic.theme:main"]},
 )
