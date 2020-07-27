@@ -1,2 +1,0 @@
--r installation.txt
-black==19.10b0
