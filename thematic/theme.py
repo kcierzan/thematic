@@ -7,7 +7,11 @@ import pathlib
 import subprocess
 import sys
 
-import iterm2
+try:
+    import iterm2
+except Exception as e:
+    pass
+
 from jinja2 import Template
 import typer
 import yaml
@@ -93,10 +97,10 @@ class Renderer:
                 output_file = os.path.join(self.output_dir, app_data["output_file"])
                 if dry_run:
                     self.log_output(app_data["template"], theme_data, output_file)
-                else:
-                    if sys.platform in app_data["os_types"]:
-                        self.render_file(app_data["template"], theme_data, output_file)
-                        self.maybe_source_generated_file(app_data)
+                    return
+                if sys.platform in app_data["os_types"]:
+                    self.render_file(app_data["template"], theme_data, output_file)
+                    self.maybe_source_generated_file(app_data)
 
     def maybe_create_output_directory(self):
         output_dir = f"{self.home_dir}/.thematic"
@@ -110,6 +114,7 @@ class Renderer:
                 typer.echo("Error creating output directory: {}".format(e))
 
     def maybe_source_generated_file(self, app_data):
+        """Inserts lines in 'origin' files that source the generated theme files"""
         with open(os.path.join(self.home_dir, app_data["origin_file"]), "r+") as f:
             lines = f.readlines()
             sourced = False
@@ -117,22 +122,24 @@ class Renderer:
                 if line.find(app_data["output_file"]) > 0:
                     sourced = True
                     break
-
             if not sourced:
-                f.seek(0)
-                output_file = f"{self.output_dir}/{app_data['output_file']}"
-                line = "{} {}".format(app_data["source"]["command"], output_file)
-                if app_data["source"]["with_quotes"]:
-                    line = '{} "{}"'.format(app_data["source"]["command"], output_file)
-                line += "\n"
-                typer.echo(
-                    f"Editing {app_data['origin_file']} to source {output_file}!"
-                )
-                if (app_data["source"]["source_at_index"]) == -1:
-                    lines.write(line)
+                self.insert_lines_in_file(f, lines, app_data)
 
-                lines.insert(app_data["source"]["source_at_index"], line)
-                f.writelines(lines)
+    def insert_lines_in_file(self, target_file, lines, app_data):
+        target_file.seek(0)
+        output_file = f"{self.output_dir}/{app_data['output_file']}"
+        line = "{} {}".format(app_data["source"]["command"], output_file)
+        if app_data["source"]["with_quotes"]:
+            line = '{} "{}"'.format(app_data["source"]["command"], output_file)
+        line += "\n"
+        typer.echo(
+            f"Editing {app_data['origin_file']} to source {output_file}!"
+        )
+        if (app_data["source"]["source_at_index"]) == -1:
+            lines.write(line)
+
+        lines.insert(app_data["source"]["source_at_index"], line)
+        target_file.writelines(lines)
 
     @staticmethod
     def render_file(app_template, theme_data, output_path):
@@ -164,6 +171,7 @@ class Shell:
             self.load_alfred_theme(theme)
         if self.platform == "linux":
             self.reload_xresources()
+            self.restart_awesome()
         self.reload_tmux()
         self.reload_neovim()
 
@@ -208,15 +216,16 @@ class Shell:
         subprocess.Popen(command)
 
     def call_with_shell(self, command):
-        subprocess.call([os.getenv("SHELL"), "-i", "-c", command])
+        subprocess.run(command, shell=True)
 
-    @staticmethod
-    def restart_awesome():
-        raise NotImplementedError()
+    def restart_awesome(self):
+        command = "echo 'awesome.restart()' | awesome-client 2>/dev/null"
+        self.call_with_shell(command)
 
-    @staticmethod
-    def reload_xresources():
-        call_with_shell("xrdb merge " + os.expanduser("~") + "/.xresources")
+    def reload_xresources(self):
+        self.call_with_shell(
+            "xrdb merge " + os.path.expanduser("~") + "/.Xresources 2>/dev/null"
+        )
 
 
 class NotImplementedError(Exception):
