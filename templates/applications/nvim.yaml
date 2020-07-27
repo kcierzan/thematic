@@ -4,6 +4,10 @@ os_types:
   - darwin
 origin_file: ".config/nvim/init.vim"
 output_file: "theme.vim"
+source:
+  command: "source"
+  with_quotes: false
+  source_at_index: -2
 template: |+
   {{vim_color_config}}
   colorscheme {{vim_colorscheme}}
