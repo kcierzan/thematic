@@ -145,7 +145,7 @@ class Renderer:
     def render_file(app_template, theme_data, output_path):
         temp = Template(app_template)
         rendered = temp.render(**theme_data)
-        with open(output_path, "w") as output:
+        with open(output_path, "w+") as output:
             output.write(rendered)
 
     @staticmethod

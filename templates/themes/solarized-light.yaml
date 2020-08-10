@@ -74,3 +74,5 @@ vim_overrides: |+
   hi CursorLine guibg='#eee8d5'
   hi VertSplit guibg = '#fdf6e3' guifg = '#fdf6e3'
   hi CursorLineNr guifg='#b58900' guibg='#eee8d5'
+  hi ALEErrorSign   guifg='#dc322f'
+  hi ALEWarningSign guifg='#b58900'

@@ -55,9 +55,6 @@ template: |+
   # end right hand segment
   set -ga status-right "#[fg={{lighter_bg}} bg={{light_bg}}]$RH_RIGHT_SEPARATOR "
 
-  # start final right hand segment
-  set -ga status-right "#[fg={{lighter_bg}} bg={{light_bg}}]$FAR_RIGHT_SEPARATOR "
-
   # add battery status
   set -ga status-right "#{battery_status_fg}#{battery_percentage} "
 

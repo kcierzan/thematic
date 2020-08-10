@@ -82,6 +82,6 @@ vim_overrides: |+
   highlight! GitGutterDelete guibg=none
   highlight! GitGutterChangeDelete guibg=none
   highlight! ColorColumn ctermfg=none ctermbg=0 guibg='#343136'
-  highlight! ALEErrorSign guibg=none
-  highlight! ALEWarningSign guibg=none
+  highlight! ALEErrorSign guibg=none guifg='#FF6D7E'
+  highlight! ALEWarningSign guibg=none guifg='#E5C463'
 
