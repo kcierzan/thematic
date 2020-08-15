@@ -12,12 +12,17 @@ try:
 except Exception as e:
     pass
 
+try:
+  from yaml import CLoader as Loader
+except:
+  from yaml import Loader
+
 from jinja2 import Template
 import typer
 import yaml
 
 ENABLED_APPS = ["nvim", "zsh", "tmux", "rofi", "xcolors", "nvim"]
-BARS = ["nvim", "tmux"]
+ENABLED_BARS = ["nvim", "tmux"]
 NVIM_SOCKET = "NVIM_LISTEN_ADDRESS"
 
 PACKAGE_DIR = pathlib.Path(__file__).parent.parent.resolve()
@@ -26,27 +31,31 @@ APP_DIR = os.path.join(PACKAGE_DIR, "templates/applications")
 BAR_DIR = os.path.join(PACKAGE_DIR, "templates/bars")
 DATA_DIR = os.path.join(PACKAGE_DIR, "templates/data")
 
-with open(f"{DATA_DIR}/separators.json") as f:
-    SEPARATORS = json.load(f)
-
-with open(f"{DATA_DIR}/fonts.json") as f:
-    FONTS = json.load(f)
-
 app = typer.Typer()
 
 
 def load_yaml(theme_file):
     with open(theme_file, "r") as f:
         try:
-            return yaml.safe_load(f)
-        except yaml.YAMLError as e:
+            return yaml.load(f, Loader=Loader)
+        except yaml.YAMLError:
             typer.echo("Theme failed to load")
-            typer.echo(e)
+            raise
 
 
 def get_theme_data(theme):
     theme_file = os.path.join(THEME_DIR, theme + ".yaml")
     return load_yaml(theme_file)
+
+
+def load_separators():
+    with open(f"{DATA_DIR}/separators.json") as f:
+        return json.load(f)
+
+
+def load_fonts():
+    with open(f"{DATA_DIR}/fonts.json") as f:
+        return json.load(f)
 
 
 def hex_to_rgb(hex):
@@ -78,12 +87,12 @@ class Renderer:
     def set_bars(self, separator_type: str):
         for bar_file in self.bar_files:
             bar_data = load_yaml(bar_file)
-            if bar_data["name"] in BARS:
+            if bar_data["name"] in ENABLED_BARS:
                 output_file = os.path.join(self.output_dir, bar_data["output_file"])
                 if sys.platform in bar_data["os_types"]:
                     self.render_file(
                         bar_data["template"],
-                        {"separators": SEPARATORS[separator_type]},
+                        {"separators": load_separators()[separator_type]},
                         output_file,
                     )
                     self.maybe_source_generated_file(bar_data)
@@ -97,7 +106,7 @@ class Renderer:
                 output_file = os.path.join(self.output_dir, app_data["output_file"])
                 if dry_run:
                     self.log_output(app_data["template"], theme_data, output_file)
-                    return
+                    continue
                 if sys.platform in app_data["os_types"]:
                     self.render_file(app_data["template"], theme_data, output_file)
                     self.maybe_source_generated_file(app_data)
@@ -110,8 +119,9 @@ class Renderer:
             )
             try:
                 os.mkdir(output_dir)
-            except Exception as e:
-                typer.echo("Error creating output directory: {}".format(e))
+            except Exception:
+                typer.echo("Error creating output directory")
+                raise
 
     def maybe_source_generated_file(self, app_data):
         """Inserts lines in 'origin' files that source the generated theme files"""
@@ -184,15 +194,20 @@ class Shell:
 
     async def change_iterm_colors(self, connection, theme):
         profile = await self.get_iterm_profile(connection)
-        iterm_colors_hex = get_theme_data(theme).get("iterm_colors")
+        try:
+            iterm_colors_hex = get_theme_data(theme)["iterm_colors"]
+        except KeyError:
+            typer.echo("iTerm2 color data not defined in colorscheme")
+            raise
         for color_name, hex in iterm_colors_hex.items():
             color = iterm2.Color(*hex_to_rgb(hex))
             await getattr(profile, f"async_set_{color_name}_color")(color)
 
     async def change_iterm_font(self, connection, font):
         profile = await self.get_iterm_profile(connection)
-        await profile.async_set_normal_font(f"{FONTS[font]['name']} 15")
-        await profile.async_set_horizontal_spacing(FONTS[font]["horizontal_spacing"])
+        fonts = load_fonts()
+        await profile.async_set_normal_font(f"{fonts[font]['name']} 15")
+        await profile.async_set_horizontal_spacing(fonts[font]["horizontal_spacing"])
 
     def reload_tmux(self):
         command = "tmux source-file ~/.tmux.conf"
@@ -243,15 +258,17 @@ def set(theme: str, dry_run: bool = False):
     typer.echo(f"Setting theme to {theme}...")
     shell = Shell()
     renderer.render_themed_files(theme, dry_run=dry_run)
-    shell.load_theme(theme)
-    typer.echo("Theme loaded.")
+    if not dry_run:
+      shell.load_theme(theme)
+      typer.echo("Theme loaded.")
 
 
 @app.command()
 def bars(separator_style: str):
-    if separator_style not in SEPARATORS.keys():
+    separators = load_separators()
+    if separator_style not in separators.keys():
         typer.echo(f"Bar '{separator_style}' not found. Enter one of the following:")
-        for bar in SEPARATORS.keys():
+        for bar in separators.keys():
             typer.echo(bar)
         return
     typer.echo(f"Setting bars to {separator_style}...")
@@ -265,32 +282,32 @@ def bars(separator_style: str):
 
 @app.command()
 def font(font: str):
-    if font not in FONTS.keys():
+    shell = Shell()
+    typer.echo(f"Setting font to {font}...")
+    try:
+      async def wrapped(connection):
+          await shell.change_iterm_font(connection, font)
+      iterm2.run_until_complete(wrapped)
+    except KeyError:
         typer.echo(f"Font '{font}' not found. Enter one of the following:")
-        for font in FONTS.keys():
+        fonts = load_fonts()
+        for font in fonts.keys():
             typer.echo(font)
         return
-    typer.echo(f"Setting font to {font}...")
-    shell = Shell()
-
-    async def wrapped(connection):
-        await shell.change_iterm_font(connection, font)
-
-    iterm2.run_until_complete(wrapped)
     typer.echo("Font updated.")
 
 
 @app.command()
 def list(option: str):
     if option == "fonts":
-        for font in FONTS.keys():
+        for font in load_fonts().keys():
             typer.echo(font)
     elif option == "themes":
         renderer = Renderer()
         for theme in renderer.themes:
             typer.echo(theme)
     elif option == "bars":
-        for separator in SEPARATORS.keys():
+        for separator in load_separators().keys():
             typer.echo(separator)
     else:
         typer.echo(f"Invalid option: '{option}'. Enter 'fonts', 'themes', or 'bars'.")
