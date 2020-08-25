@@ -248,19 +248,19 @@ class NotImplementedError(Exception):
 
 
 @app.command()
-def set(theme: str, dry_run: bool = False):
+def colors(theme: str, dry_run: bool = False):
     renderer = Renderer()
     if theme not in renderer.themes:
-        typer.echo(f"Theme '{theme}' not found. Enter one of the following:")
+        typer.echo(f"Colorscheme '{theme}' not found. Enter one of the following:")
         for theme in renderer.themes:
             typer.echo(theme)
         return
-    typer.echo(f"Setting theme to {theme}...")
+    typer.echo(f"Setting colorscheme to {theme}...")
     shell = Shell()
     renderer.render_themed_files(theme, dry_run=dry_run)
     if not dry_run:
       shell.load_theme(theme)
-      typer.echo("Theme loaded.")
+      typer.echo("Colorscheme loaded.")
 
 
 @app.command()
@@ -302,7 +302,7 @@ def list(option: str):
     if option == "fonts":
         for font in load_fonts().keys():
             typer.echo(font)
-    elif option == "themes":
+    elif option == "colors":
         renderer = Renderer()
         for theme in renderer.themes:
             typer.echo(theme)

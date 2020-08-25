@@ -42,12 +42,12 @@ pip install -e .
 
 2. View the available themes/fonts/bars
 ```sh
-theme list {fonts, themes, bars}
+theme list {fonts, colors, bars}
 ```
 
-3. Set a theme for all your apps
+3. Set a colorscheme for all your apps
 ```sh
-theme set onedark
+theme colors onedark
 ```
 
 4. Set a font
