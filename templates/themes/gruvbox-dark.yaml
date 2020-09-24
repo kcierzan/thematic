@@ -1,0 +1,77 @@
+name: gruvbox-dark
+colors:
+  - &fg      '#ddc7a1'
+  - &bg0     '#282828'
+  - &bg1     '#32302f'
+  - &bg2     '#3c3836'
+  - &bg3     '#45403d'
+  - &red     '#ea6962'
+  - &red2    '#ea6962'
+  - &cyan    '#89b482'
+  - &blue    '#7daea3'
+  - &blue2   '#7daea3'
+  - &orange  '#e78a4e'
+  - &yellow  '#d8a657'
+  - &green   '#a9b665'
+  - &black   '#46413e'
+  - &black2  '#5b534d'
+  - &magenta '#d3869b'
+  - &green2  '#a9b665'
+  - &white   '#d4be98'
+  - &white2  '#a89984'
+iterm_colors:
+  background: *bg0
+  cursor: *cyan
+  cursor_text: *bg0
+  foreground: *fg
+  ansi_0: *black
+  ansi_1: *red
+  ansi_2: *green
+  ansi_3: *orange
+  ansi_4: *magenta
+  ansi_5: *blue
+  ansi_6: *cyan
+  ansi_7: *white
+  ansi_8: *bg3
+  ansi_9: *red
+  ansi_10: *green2
+  ansi_11: *orange
+  ansi_12: *magenta
+  ansi_13: *green2
+  ansi_14: *cyan
+  ansi_15: *white2
+foreground:        *fg
+dark_bg:           *bg0
+light_bg:          *bg1
+lighter_bg:        *bg2
+lightest_bg:       *bg3
+tmux_mode_fg:      *orange
+bat_theme:         "Monokai Extended Origin"
+autosuggestions:   "238"
+xcolors_01:        *red
+xcolors_02:        *green
+xcolors_03:        *yellow
+xcolors_04:        *blue
+xcolors_05:        *magenta
+xcolors_06:        *cyan
+xcolors_07:        *white
+xcolors_08:        *bg3
+xcolors_09:        *orange
+xcolors_10:        *green2
+xcolors_11:        *orange
+xcolors_12:        *blue2
+xcolors_13:        *magenta
+xcolors_14:        *cyan
+xcolors_15:        *white2
+vim_colorscheme:   "gruvbox-material"
+lightline_normal:  *green
+lightline_insert:  *blue
+lightline_replace: *red
+lightline_visual:  *magenta
+lightline_error:   *red
+lightline_warning: *yellow
+vim_color_config: |+
+  let g:gruvbox_material_enable_italic = 1
+  let g:gruvbox_material_enable_italic_comment = 1
+vim_overrides: |+
+  let g:fzf_colors = {}
