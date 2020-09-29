@@ -75,3 +75,10 @@ vim_color_config: |+
   let g:gruvbox_material_enable_italic_comment = 1
 vim_overrides: |+
   let g:fzf_colors = {}
+  hi GitGutterAdd guibg=none
+  hi GitGutterChange guibg=none
+  hi GitGutterDelete guibg=none
+  hi SignColumn guibg=none
+  hi VertSplit guifg='#282828'
+  highlight! ALEErrorSign guibg=none guifg='#ea6962'
+  highlight! ALEWarningSign guibg=none guifg='#d8a657'

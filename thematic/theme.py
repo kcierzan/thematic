@@ -6,6 +6,7 @@ import os
 import pathlib
 import subprocess
 import sys
+from typing import Tuple, List
 
 try:
     import iterm2
@@ -13,9 +14,9 @@ except Exception as e:
     pass
 
 try:
-  from yaml import CLoader as Loader
+    from yaml import CLoader as Loader
 except:
-  from yaml import Loader
+    from yaml import Loader
 
 from jinja2 import Template
 import typer
@@ -24,7 +25,7 @@ import yaml
 ENABLED_APPS = ["nvim", "zsh", "tmux", "rofi", "xcolors", "nvim"]
 ENABLED_BARS = ["nvim", "tmux"]
 NVIM_SOCKET = "NVIM_LISTEN_ADDRESS"
-
+ALACRITTY_CONFIG = ".config/alacritty/alacritty.yml"
 PACKAGE_DIR = pathlib.Path(__file__).parent.parent.resolve()
 THEME_DIR = os.path.join(PACKAGE_DIR, "templates/themes")
 APP_DIR = os.path.join(PACKAGE_DIR, "templates/applications")
@@ -68,16 +69,7 @@ class Renderer:
     def __init__(self):
         self.home_dir = os.path.expanduser("~")
         self.output_dir = os.path.join(self.home_dir, ".thematic")
-        self.app_files = [
-            os.path.join(APP_DIR, f)
-            for f in os.listdir(APP_DIR)
-            if os.path.isfile(os.path.join(APP_DIR, f))
-        ]
-        self.bar_files = [
-            os.path.join(BAR_DIR, f)
-            for f in os.listdir(BAR_DIR)
-            if os.path.isfile(os.path.join(BAR_DIR, f))
-        ]
+        self.app_files, self.bar_files = self.get_files(APP_DIR, BAR_DIR)
         self.themes = [
             f.split(".")[0]
             for f in os.listdir(THEME_DIR)
@@ -110,6 +102,44 @@ class Renderer:
                 if sys.platform in app_data["os_types"]:
                     self.render_file(app_data["template"], theme_data, output_file)
                     self.maybe_source_generated_file(app_data)
+        if not dry_run:
+            self.theme_alacritty(theme_data)
+
+    def theme_alacritty(self, theme):
+        config_path = os.path.join(os.path.expanduser("~"), ALACRITTY_CONFIG)
+        current = load_yaml(config_path)
+        c = theme["iterm_colors"]
+        new_colors = {
+            "colors": {
+                "primary": {
+                    "foreground": c["foreground"],
+                    "background": c["background"],
+                },
+                "normal": {
+                    "black": c["ansi_0"],
+                    "red": c["ansi_1"],
+                    "green": c["ansi_2"],
+                    "yellow": c["ansi_3"],
+                    "blue": c["ansi_4"],
+                    "magenta": c["ansi_5"],
+                    "cyan": c["ansi_6"],
+                    "white": c["ansi_7"],
+                },
+                "bright": {
+                    "black": c["ansi_8"],
+                    "red": c["ansi_9"],
+                    "green": c["ansi_10"],
+                    "yellow": c["ansi_11"],
+                    "blue": c["ansi_12"],
+                    "magenta": c["ansi_13"],
+                    "cyan": c["ansi_14"],
+                    "white": c["ansi_15"],
+                },
+            }
+        }
+        current.update(new_colors)
+        with open(config_path, "w") as f:
+            yaml.dump(current, f, default_flow_style=False)
 
     def maybe_create_output_directory(self):
         output_dir = f"{self.home_dir}/.thematic"
@@ -123,7 +153,7 @@ class Renderer:
                 typer.echo("Error creating output directory")
                 raise
 
-    def maybe_source_generated_file(self, app_data):
+    def maybe_source_generated_file(self, app_data) -> None:
         """Inserts lines in 'origin' files that source the generated theme files"""
         with open(os.path.join(self.home_dir, app_data["origin_file"]), "r+") as f:
             lines = f.readlines()
@@ -135,16 +165,14 @@ class Renderer:
             if not sourced:
                 self.insert_lines_in_file(f, lines, app_data)
 
-    def insert_lines_in_file(self, target_file, lines, app_data):
+    def insert_lines_in_file(self, target_file, lines, app_data) -> None:
         target_file.seek(0)
         output_file = f"{self.output_dir}/{app_data['output_file']}"
         line = "{} {}".format(app_data["source"]["command"], output_file)
         if app_data["source"]["with_quotes"]:
             line = '{} "{}"'.format(app_data["source"]["command"], output_file)
         line += "\n"
-        typer.echo(
-            f"Editing {app_data['origin_file']} to source {output_file}!"
-        )
+        typer.echo(f"Editing {app_data['origin_file']} to source {output_file}!")
         if (app_data["source"]["source_at_index"]) == -1:
             lines.write(line)
 
@@ -152,33 +180,41 @@ class Renderer:
         target_file.writelines(lines)
 
     @staticmethod
-    def render_file(app_template, theme_data, output_path):
+    def render_file(app_template, theme_data, output_path) -> None:
         temp = Template(app_template)
         rendered = temp.render(**theme_data)
         with open(output_path, "w+") as output:
             output.write(rendered)
 
     @staticmethod
-    def log_output(app_template, theme_data, output_file):
+    def log_output(app_template, theme_data, output_file) -> None:
         temp = Template(app_template)
         typer.echo(
             f"*********************** Rendering to '{output_file}' ***********************"
         )
         typer.echo(temp.render(**theme_data))
 
+    @staticmethod
+    def get_files(*directories) -> Tuple[List[str]]:
+        def get_files_for_dir(directory) -> List[str]:
+            return [
+                os.path.join(directory, f)
+                for f in os.listdir(directory)
+                if os.path.isfile(os.path.join(directory, f))
+            ]
+
+        return tuple(get_files_for_dir(directory) for directory in directories)
+
 
 class Shell:
     def __init__(self):
         self.platform = sys.platform
 
-    def load_theme(self, theme):
+    def load_theme(self, theme: str, iterm: bool) -> None:
         if self.platform == "darwin":
-
-            async def wrapped(connection):
-                await self.change_iterm_colors(connection, theme)
-
-            iterm2.run_until_complete(wrapped)
             self.load_alfred_theme(theme)
+            if iterm:
+                self.load_iterm_theme(theme)
         if self.platform == "linux":
             self.reload_xresources()
             self.restart_awesome()
@@ -192,7 +228,16 @@ class Shell:
             profile = await session.async_get_profile()
             return profile
 
-    async def change_iterm_colors(self, connection, theme):
+    def load_iterm_theme(self, theme: str) -> None:
+        async def wrapped(connection):
+            await self.change_iterm_colors(connection, theme)
+
+        try:
+            iterm2.run_until_complete(wrapped)
+        except:
+            ...
+
+    async def change_iterm_colors(self, connection, theme: str) -> None:
         profile = await self.get_iterm_profile(connection)
         try:
             iterm_colors_hex = get_theme_data(theme)["iterm_colors"]
@@ -203,17 +248,35 @@ class Shell:
             color = iterm2.Color(*hex_to_rgb(hex))
             await getattr(profile, f"async_set_{color_name}_color")(color)
 
-    async def change_iterm_font(self, connection, font):
+    async def change_iterm_font(self, connection, font: str) -> None:
         profile = await self.get_iterm_profile(connection)
         fonts = load_fonts()
         await profile.async_set_normal_font(f"{fonts[font]['name']} 15")
         await profile.async_set_horizontal_spacing(fonts[font]["horizontal_spacing"])
 
-    def reload_tmux(self):
+    def change_alacritty_font(self, font: str) -> None:
+        config_path = os.path.join(os.path.expanduser("~"), ALACRITTY_CONFIG)
+        current = load_yaml(config_path)
+        fonts = load_fonts()
+        new_font = {
+            "font": {
+                "bold": {"family": fonts[font]["family"],},
+                "normal": {
+                    "family": fonts[font]["family"],
+                    "style": fonts[font]["style"],
+                },
+                "italic": {"family": fonts[font]["family"],},
+            }
+        }
+        current.update(new_font)
+        with open(config_path, "w") as f:
+            yaml.dump(current, f, default_flow_style=False)
+
+    def reload_tmux(self) -> None:
         command = "tmux source-file ~/.tmux.conf"
         self.call_with_shell(command)
 
-    def reload_neovim(self):
+    def reload_neovim(self) -> None:
         if not os.environ.get(NVIM_SOCKET):
             typer.echo(f"${NVIM_SOCKET} env var not set! Neovim will not be reloaded.")
             return
@@ -222,7 +285,7 @@ class Shell:
             command = "nvr --nostart --remote-send ':so ~/.config/nvim/init.vim<CR>'"
             self.call_with_shell(command)
 
-    def load_alfred_theme(self, theme):
+    def load_alfred_theme(self, theme) -> None:
         command = [
             "osascript",
             "-e",
@@ -230,14 +293,14 @@ class Shell:
         ]
         subprocess.Popen(command)
 
-    def call_with_shell(self, command):
+    def call_with_shell(self, command) -> None:
         subprocess.run(command, shell=True)
 
     def restart_awesome(self):
         command = "echo 'awesome.restart()' | awesome-client 2>/dev/null"
         self.call_with_shell(command)
 
-    def reload_xresources(self):
+    def reload_xresources(self) -> None:
         self.call_with_shell(
             "xrdb merge " + os.path.expanduser("~") + "/.Xresources 2>/dev/null"
         )
@@ -248,7 +311,7 @@ class NotImplementedError(Exception):
 
 
 @app.command()
-def colors(theme: str, dry_run: bool = False):
+def colors(theme: str, dry_run: bool = False, iterm: bool = False) -> None:
     renderer = Renderer()
     if theme not in renderer.themes:
         typer.echo(f"Colorscheme '{theme}' not found. Enter one of the following:")
@@ -259,12 +322,12 @@ def colors(theme: str, dry_run: bool = False):
     shell = Shell()
     renderer.render_themed_files(theme, dry_run=dry_run)
     if not dry_run:
-      shell.load_theme(theme)
-      typer.echo("Colorscheme loaded.")
+        shell.load_theme(theme, iterm)
+        typer.echo("Colorscheme loaded.")
 
 
 @app.command()
-def bars(separator_style: str):
+def bars(separator_style: str) -> None:
     separators = load_separators()
     if separator_style not in separators.keys():
         typer.echo(f"Bar '{separator_style}' not found. Enter one of the following:")
@@ -281,13 +344,18 @@ def bars(separator_style: str):
 
 
 @app.command()
-def font(font: str):
+def font(font: str, iterm: bool = False) -> None:
     shell = Shell()
     typer.echo(f"Setting font to {font}...")
     try:
-      async def wrapped(connection):
-          await shell.change_iterm_font(connection, font)
-      iterm2.run_until_complete(wrapped)
+        if iterm:
+
+            async def wrapped(connection):
+                await shell.change_iterm_font(connection, font)
+
+            iterm2.run_until_complete(wrapped)
+        else:
+            shell.change_alacritty_font(font)
     except KeyError:
         typer.echo(f"Font '{font}' not found. Enter one of the following:")
         fonts = load_fonts()
@@ -298,7 +366,7 @@ def font(font: str):
 
 
 @app.command()
-def list(option: str):
+def list(option: str) -> None:
     if option == "fonts":
         for font in load_fonts().keys():
             typer.echo(font)

@@ -1,27 +1,80 @@
 {
-    "jetbrains": {
-        "name": "JetBrainsMonoNerdFontCompleteM-Regular",
-        "horizontal_spacing": 1
-    },
-    "cascadia": {"name": "CaskaydiaCoveNerdFontCompleteM-", "horizontal_spacing": 1},
-    "hack": {"name": "HackNerdFontCompleteM-Regular", "horizontal_spacing": 1},
-    "iosevka": {"name": "IosevkaNerdFontCompleteM-Term", "horizontal_spacing": 1},
-    "mononoki": {"name": "mononokiNerdFontCompleteM-Regular", "horizontal_spacing": 1},
-    "fira": {"name": "FiraCodeNerdFontCompleteM-Retina", "horizontal_spacing": 1},
-    "inconsolata": {
-        "name": "InconsolataLGCNerdFontCompleteM-",
-        "horizontal_spacing": 1
-    },
-    "monoid": {"name": "MonoidNerdFontCompleteM-Retina", "horizontal_spacing": 1},
-    "victor": {"name": "VictorMonoNerdFontCompleteM-Medium", "horizontal_spacing": 1.1},
-    "imw": {
-        "name": "iMWritingMonoSNerdFontCompleteM-Regular",
-        "horizontal_spacing": 0.70
-    },
-    "blex": {"name": "BlexMonoNerdFontCompleteM-Medium", "horizontal_spacing": 1},
-    "sauce": {"name": "SauceCodeProNerdFontCompleteM-Medium", "horizontal_spacing": 1},
-    "roboto": {
-        "name": "RobotoMonoNerdFontCompleteM-Regular",
-        "horizontal_spacing": 0.85
-    }
+  "jetbrains": {
+    "name": "JetBrainsMonoNerdFontCompleteM-Regular",
+    "horizontal_spacing": 1,
+    "family": "JetBrainsMono Nerd Font Mono",
+    "style": "Medium"
+  },
+  "cascadia": {
+    "name": "CaskaydiaCoveNerdFontCompleteM-",
+    "horizontal_spacing": 1,
+    "family": "CaskaydiaCove Nerd Font Mono",
+    "style": "Book"
+  },
+  "hack": {
+    "name": "HackNerdFontCompleteM-Regular",
+    "horizontal_spacing": 1,
+    "family": "Hack Nerd Font Mono",
+    "style": "Regular"
+  },
+  "iosevka": {
+    "name": "IosevkaNerdFontCompleteM-Term",
+    "horizontal_spacing": 1,
+    "family": "Iosevka Nerd Font Mono",
+    "style": "Medium"
+  },
+  "mononoki": {
+    "name": "mononokiNerdFontCompleteM-Regular",
+    "horizontal_spacing": 1,
+    "family": "mononoki Nerd Font Mono",
+    "style": "Regular"
+  },
+  "fira": {
+    "name": "FiraCodeNerdFontCompleteM-Retina",
+    "horizontal_spacing": 1,
+    "family": "FiraCode Nerd Font Mono",
+    "style": "Retina"
+  },
+  "inconsolata": {
+    "name": "InconsolataLGCNerdFontCompleteM-",
+    "horizontal_spacing": 1,
+    "family": "InconsolataLGC Nerd Font Mono",
+    "style": "Medium"
+  },
+  "monoid": {
+    "name": "MonoidNerdFontCompleteM-Retina",
+    "horizontal_spacing": 1,
+    "family": "Monoid Nerd Font Mono",
+    "style": "Retina"
+  },
+  "victor": {
+    "name": "VictorMonoNerdFontCompleteM-Medium",
+    "horizontal_spacing": 1.1,
+    "family": "VictorMono Nerd Font Mono",
+    "style": "Medium"
+  },
+  "imw": {
+    "name": "iMWritingMonoSNerdFontCompleteM-Regular",
+    "horizontal_spacing": 0.7,
+    "family": "iMWritingMonoS Nerd Font Mono",
+    "style": "Regular"
+  },
+  "blex": {
+    "name": "BlexMonoNerdFontCompleteM-Medium",
+    "horizontal_spacing": 1,
+    "family": "BlexMono Nerd Font Mono",
+    "style": "Medium"
+  },
+  "sauce": {
+    "name": "SauceCodeProNerdFontCompleteM-Medium",
+    "horizontal_spacing": 1,
+    "family": "SauceCodePro Nerd Font Mono",
+    "style": "Medium"
+  },
+  "roboto": {
+    "name": "RobotoMonoNerdFontCompleteM-Regular",
+    "horizontal_spacing": 0.85,
+    "family": "RobotoMono Nerd Font Mono",
+    "style": "Medium"
+  }
 }
