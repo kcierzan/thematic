@@ -10,7 +10,7 @@ from typing import Tuple, List
 
 try:
     import iterm2
-except Exception as e:
+except:
     pass
 
 try:
@@ -149,7 +149,7 @@ class Renderer:
             )
             try:
                 os.mkdir(output_dir)
-            except Exception:
+            except:
                 typer.echo("Error creating output directory")
                 raise
 
@@ -230,14 +230,14 @@ class Shell:
 
     def load_iterm_theme(self, theme: str) -> None:
         async def wrapped(connection):
-            await self.change_iterm_colors(connection, theme)
+            await self.set_iterm_colors(connection, theme)
 
         try:
             iterm2.run_until_complete(wrapped)
         except:
             ...
 
-    async def change_iterm_colors(self, connection, theme: str) -> None:
+    async def set_iterm_colors(self, connection, theme: str) -> None:
         profile = await self.get_iterm_profile(connection)
         try:
             iterm_colors_hex = get_theme_data(theme)["iterm_colors"]
@@ -248,13 +248,13 @@ class Shell:
             color = iterm2.Color(*hex_to_rgb(hex))
             await getattr(profile, f"async_set_{color_name}_color")(color)
 
-    async def change_iterm_font(self, connection, font: str) -> None:
+    async def set_iterm_font(self, connection, font: str) -> None:
         profile = await self.get_iterm_profile(connection)
         fonts = load_fonts()
         await profile.async_set_normal_font(f"{fonts[font]['name']} 15")
         await profile.async_set_horizontal_spacing(fonts[font]["horizontal_spacing"])
 
-    def change_alacritty_font(self, font: str) -> None:
+    def set_alacritty_font(self, font: str) -> None:
         config_path = os.path.join(os.path.expanduser("~"), ALACRITTY_CONFIG)
         current = load_yaml(config_path)
         fonts = load_fonts()
@@ -351,11 +351,11 @@ def font(font: str, iterm: bool = False) -> None:
         if iterm:
 
             async def wrapped(connection):
-                await shell.change_iterm_font(connection, font)
+                await shell.set_iterm_font(connection, font)
 
             iterm2.run_until_complete(wrapped)
         else:
-            shell.change_alacritty_font(font)
+            shell.set_alacritty_font(font)
     except KeyError:
         typer.echo(f"Font '{font}' not found. Enter one of the following:")
         fonts = load_fonts()
