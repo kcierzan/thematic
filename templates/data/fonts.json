@@ -56,6 +56,7 @@
   "imw": {
     "name": "iMWritingMonoSNerdFontCompleteM-Regular",
     "horizontal_spacing": 0.7,
+    "x_offset": -7,
     "family": "iMWritingMonoS Nerd Font Mono",
     "style": "Regular"
   },
@@ -74,6 +75,7 @@
   "roboto": {
     "name": "RobotoMonoNerdFontCompleteM-Regular",
     "horizontal_spacing": 0.85,
+    "x_offset": -2,
     "family": "RobotoMono Nerd Font Mono",
     "style": "Medium"
   }
