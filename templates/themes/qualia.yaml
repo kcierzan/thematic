@@ -1,0 +1,94 @@
+name: qualia
+colors:
+  - &fg       "#C0C0C0"
+  - &bg0      "#101010"
+  - &bg1      "#181818"
+  - &bg2      "#252525"
+  - &bg3      "#282828"
+  - &red      "#EFA6A2"
+  - &green    "#80C990"
+  - &yellow   "#A69460"
+  - &blue     "#A3B8EF"
+  - &magenta  "#E6A3DC"
+  - &cyan     "#50CACD"
+  - &white    "#808080"
+  - &black2   "#454545"
+  - &red2     "#E0AF85"
+  - &green2   "#5ACCAF"
+  - &yellow2  "#C8C874"
+  - &blue2    "#CCACED"
+  - &magenta2 "#F2A1C2"
+  - &cyan2    "#74C3E4"
+  - &white2   "#C0C0C0"
+iterm_colors:
+  background: *bg0 
+  cursor: *cyan
+  cursor_text: *bg0
+  foreground: *fg
+  ansi_0: *bg2
+  ansi_1: *red
+  ansi_2: *green
+  ansi_3: *yellow
+  ansi_4: *magenta
+  ansi_5: *blue
+  ansi_6: *cyan
+  ansi_7: *white
+  ansi_8: *black2
+  ansi_9: *red2
+  ansi_10: *green2
+  ansi_11: *yellow2
+  ansi_12: *blue2
+  ansi_13: *magenta2
+  ansi_14: *cyan2
+  ansi_15: *white2
+foreground:        *fg
+dark_bg:           *bg0
+light_bg:          *bg1
+lighter_bg:        *bg2
+lightest_bg:       *bg3
+tmux_mode_fg:      "#80C990"
+bat_theme:         "TwoDark"
+autosuggestions:   "238"
+xcolors_01:        *red
+xcolors_02:        *green
+xcolors_03:        *yellow
+xcolors_04:        *blue
+xcolors_05:        *magenta
+xcolors_06:        *cyan
+xcolors_07:        *white
+xcolors_08:        *black2
+xcolors_09:        *red2
+xcolors_10:        *green2
+xcolors_11:        *yellow2
+xcolors_12:        *blue2
+xcolors_13:        *magenta2
+xcolors_14:        *cyan2
+xcolors_15:        *white2
+vim_colorscheme:   "edge"
+lightline_normal:  *green
+lightline_insert:  *blue
+lightline_replace: *red
+lightline_visual:  *magenta
+lightline_error:   *red
+lightline_warning: *yellow
+vim_color_config: |+
+ set background=dark
+vim_overrides: |+
+  hi Normal ctermfg=none ctermbg=none guibg=none guifg=none
+  hi EndOfBuffer ctermfg=none ctermbg=none guibg=none guifg=none
+  hi SignColumn guibg=none
+  hi GitGutterAdd guibg=none
+  hi GitGutterChange guibg=none
+  hi GitGutterDelete guibg=none
+  hi ColorColumn ctermfg=none ctermbg=0 guibg='#2c323d'
+  hi CursorLineNr guibg='#2c323d'
+  hi CursorLine guibg='#2c323d'
+  hi ALEErrorSign                    guifg='#e06c75'
+  hi ALEWarningSign                  guifg='#e5c07b'
+  hi VertSplit guifg='#272c33'
+  hi Comment gui=italic
+  hi CocHighlightText guibg='#404754'
+  hi Search guifg='#46d9ff' guibg='#505868' gui=underline
+  hi Pmenu guibg='#2C323D'
+  hi PmenuSbar guibg = '#2C323D'
+  hi PmenuSel guibg='#c678dd'
