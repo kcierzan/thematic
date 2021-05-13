@@ -75,21 +75,23 @@ lightline_warning: *yellow
 vim_color_config: |+
  set background=dark
 vim_overrides: |+
-  hi Normal ctermfg=none ctermbg=none guibg=none guifg=none
-  hi EndOfBuffer ctermfg=none ctermbg=none guibg=none guifg=none
-  hi SignColumn guibg=none
-  hi GitGutterAdd guibg=none
-  hi GitGutterChange guibg=none
-  hi GitGutterDelete guibg=none
-  hi ColorColumn ctermfg=none ctermbg=0 guibg='#2c323d'
-  hi CursorLineNr guibg='#2c323d'
-  hi CursorLine guibg='#2c323d'
-  hi ALEErrorSign                    guifg='#e06c75'
-  hi ALEWarningSign                  guifg='#e5c07b'
-  hi VertSplit guifg='#272c33'
-  hi Comment gui=italic
-  hi CocHighlightText guibg='#404754'
-  hi Search guifg='#46d9ff' guibg='#505868' gui=underline
-  hi Pmenu guibg='#2C323D'
-  hi PmenuSbar guibg = '#2C323D'
-  hi PmenuSel guibg='#c678dd'
+  augroup HLOverrides
+  autocmd!
+  autocmd VimEnter *
+      \ hi Normal ctermfg=none ctermbg=none guibg=none guifg=none
+      \| hi EndOfBuffer ctermfg=none ctermbg=none guibg=none guifg=none
+      \| hi! SignifySignAdd ctermbg=none guibg=none guifg='#98C379'
+      \| hi! SignifySignDelete ctermbg=none guibg=none guifg='#ff6c6b'
+      \| hi! SignifySignChange ctermbg=none guibg=none guifg='#51afef'
+      \| hi! SignColumn ctermbg=none guibg=none 
+      \| hi! ColorColumn ctermfg=none ctermbg=0 guibg='#2c323d'
+      \| hi! CursorLineNr guibg='#2c323d'
+      \| hi! CursorLine guibg='#2c323d'
+      \| hi! VertSplit guifg='#272c33'
+      \| hi! Comment gui=italic
+      \| hi! CocHighlightText guibg='#404754'
+      \| hi! Search guifg='#46d9ff' guibg='#505868' gui=underline
+      \| hi! Pmenu guibg='#2C323D'
+      \| hi! PmenuSbar guibg = '#2C323D'
+      \| hi! PmenuSel guibg='#c678dd'
+  augroup END

@@ -46,7 +46,7 @@ light_bg:          *bg1
 lighter_bg:        *bg2
 lightest_bg:       *bg3
 tmux_mode_fg:      *orange
-bat_theme:         "Monokai Extended Origin"
+bat_theme:         "gruvbox"
 autosuggestions:   "238"
 xcolors_01:        *red
 xcolors_02:        *green
@@ -74,11 +74,17 @@ vim_color_config: |+
   let g:gruvbox_material_enable_italic = 1
   let g:gruvbox_material_enable_italic_comment = 1
 vim_overrides: |+
-  let g:fzf_colors = {}
-  hi GitGutterAdd guibg=none
-  hi GitGutterChange guibg=none
-  hi GitGutterDelete guibg=none
-  hi SignColumn guibg=none
-  hi VertSplit guifg='#282828'
-  highlight! ALEErrorSign guibg=none guifg='#ea6962'
-  highlight! ALEWarningSign guibg=none guifg='#d8a657'
+  augroup HLOverrides
+  autocmd! 
+  autocmd VimEnter *
+        \ hi! SignColumn ctermbg=none guibg=none 
+        \| hi! SignifySignAdd ctermbg=none guibg=none guifg='#a9b665'
+        \| hi! SignifySignDelete ctermbg=none guibg=none guifg='#ea6962'
+        \| hi! SignifySignChange ctermbg=none guibg=none guifg='#7daea3'
+        \| hi! CocInfoSign ctermbg=none guibg=none guifg='#7daea3'
+        \| hi! CocHintSign ctermbg=none guibg=none guifg='#a9b665'
+        \| hi! CocWarningSign ctermbg=none guibg=none guifg='#d8a657'
+        \| hi! CocErrorSign ctermbg=none guibg=none guifg='#ea6962'
+        \| hi! VertSplit guifg='#282828'
+        \| hi! CocWarningLine guibg=none ctermbg=none
+  augroup END

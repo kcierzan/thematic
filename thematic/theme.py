@@ -11,7 +11,7 @@ from typing import Tuple, List
 try:
     import iterm2
 except:
-    pass
+    ...
 
 try:
     from yaml import CLoader as Loader
@@ -22,8 +22,8 @@ from jinja2 import Template
 import typer
 import yaml
 
-ENABLED_APPS = ["nvim", "zsh", "tmux", "rofi", "xcolors", "nvim"]
-ENABLED_BARS = ["nvim", "tmux"]
+ENABLED_APPS = ["nvim", "zsh", "tmux", "rofi", "xcolors", "nvim", "galaxyline"]
+ENABLED_BARS = ["nvim", "tmux", "galaxyline"]
 NVIM_SOCKET = "NVIM_LISTEN_ADDRESS"
 ALACRITTY_CONFIG = ".config/alacritty/alacritty.yml"
 PACKAGE_DIR = pathlib.Path(__file__).parent.parent.resolve()
@@ -162,7 +162,7 @@ class Renderer:
                 if line.find(app_data["output_file"]) > 0:
                     sourced = True
                     break
-            if not sourced:
+            if not sourced and not app_data["source"].get("skip"):
                 self.insert_lines_in_file(f, lines, app_data)
 
     def insert_lines_in_file(self, target_file, lines, app_data) -> None:
@@ -260,14 +260,21 @@ class Shell:
         fonts = load_fonts()
         new_font = {
             "font": {
-                "bold": {"family": fonts[font]["family"],},
+                "bold": {
+                    "family": fonts[font]["family"],
+                },
                 "normal": {
                     "family": fonts[font]["family"],
                     "style": fonts[font]["style"],
                 },
-                "italic": {"family": fonts[font]["family"],},
+                "italic": {
+                    "family": fonts[font]["family"],
+                },
             }
         }
+        x_offset = fonts[font].get("x_offset")
+        if x_offset:
+            new_font["font"]["offset"] = {"x": x_offset}
         current.update(new_font)
         with open(config_path, "w") as f:
             yaml.dump(current, f, default_flow_style=False)
