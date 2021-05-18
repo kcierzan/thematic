@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-
-import argparse
 import json
 import os
 import pathlib
@@ -21,6 +19,7 @@ except:
 from jinja2 import Template
 import typer
 import yaml
+
 
 ENABLED_APPS = ["nvim", "zsh", "tmux", "rofi", "xcolors", "nvim", "galaxyline"]
 ENABLED_BARS = ["nvim", "tmux", "galaxyline"]
@@ -195,7 +194,7 @@ class Renderer:
         typer.echo(temp.render(**theme_data))
 
     @staticmethod
-    def get_files(*directories) -> Tuple[List[str]]:
+    def get_files(*directories) -> Tuple[List[str], ...]:
         def get_files_for_dir(directory) -> List[str]:
             return [
                 os.path.join(directory, f)
@@ -288,7 +287,9 @@ class Shell:
             typer.echo(f"${NVIM_SOCKET} env var not set! Neovim will not be reloaded.")
             return
 
-        if os.path.exists(os.environ.get(NVIM_SOCKET)):
+        nvim_socket = os.environ.get(NVIM_SOCKET)
+
+        if nvim_socket and os.path.exists(nvim_socket):
             command = "nvr --nostart --remote-send ':so ~/.config/nvim/init.vim<CR>'"
             self.call_with_shell(command)
 
