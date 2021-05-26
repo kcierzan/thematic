@@ -13,9 +13,6 @@ from thematic.renderer import Renderer
 
 app = typer.Typer()
 
-class NotImplementedError(Exception):
-    pass
-
 
 @app.command()
 def colors(theme: str, dry_run: bool = False, iterm: bool = False) -> None:
