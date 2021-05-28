@@ -1,13 +1,28 @@
-name: rofi
-os_types:
-  - linux
-origin_file: ".config/rofi/config"
-output_file: "thematic-rofi.rasi"
-source:
-  command: "source"
-  with_quotes: false
-  source_at_index: -2
-template: |+
+from thematic.apps import base
+
+
+class Rofi(base.App):
+    @staticmethod
+    async def set_theme(theme: str) -> None:
+        pass
+
+    @staticmethod
+    async def set_font(font: str) -> None:
+        pass
+
+    @staticmethod
+    async def reload() -> None:
+        pass
+
+    supported_oses = {"linux"}
+    config_file = ".config/rofi/config"
+    theme_file = "thematic-rofi.rasi"
+    theme_injection_config = {
+        "command": "source",
+        "with_quotes": False,
+        "source_at_index": -2
+    }
+    template = """
   {
   	background: {{dark_bg}};
   	white07-transparent: {{foreground}}20;
@@ -117,4 +132,4 @@ template: |+
   element normal active, element selected active, element alternate active {
   	text-color: @base0B;
   }
-
+    """

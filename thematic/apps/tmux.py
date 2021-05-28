@@ -1,14 +1,23 @@
-name: tmux
-os_types:
-  - linux
-  - darwin
-origin_file: ".tmux.conf"
-output_file: "theme.conf"
-source:
-  command: "source-file"
-  with_quotes: false
-  source_at_index: -3
-template: |+
+from thematic import util
+from thematic.apps import base
+
+
+class Tmux(base.App):
+    supported_oses = {"linux", "darwin"}
+    config_file = ".tmux.conf"
+    theme_file = "theme.conf"
+    bar_file = "bars.conf"
+    theme_injection_config = {
+        "command": "source-file",
+        "with_quotes": False,
+        "source_at_index": -3
+    }
+    bar_injection_config = {
+        "command": "source-file",
+        "with_quotes": False,
+        "source_at_index": -4
+    }
+    theme_template = """
   set -g status-position bottom
   set -g status-justify "left"
   set -g status-style "bg={{light_bg}}"
@@ -106,3 +115,26 @@ template: |+
 
   set -g window-active-style "bg={{dark_bg}}"
   set -g window-status-activity-style "fg={{xcolors_03}}"
+    """
+
+    bar_template = """
+  FAR_LEFT_SEPARATOR="{{separators[0]}}"
+  LH_LEFT_SEPARATOR="{{separators[1]}}"
+  LH_RIGHT_SEPARATOR="{{separators[2]}}"
+  RH_LEFT_SEPARATOR="{{separators[3]}}"
+  RH_RIGHT_SEPARATOR="{{separators[4]}}"
+  FAR_RIGHT_SEPARATOR="{{separators[5]}}"
+    """
+
+    @staticmethod
+    async def reload() -> None:
+        command = "tmux source-file ~/.tmux.conf"
+        await util.call_with_shell(command)
+
+    @staticmethod
+    async def set_theme(theme: str) -> None:
+        pass
+
+    @staticmethod
+    async def set_font(font: str) -> None:
+        pass
