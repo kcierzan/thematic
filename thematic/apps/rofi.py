@@ -17,11 +17,6 @@ class Rofi(base.App):
     supported_oses = {"linux"}
     config_file = ".config/rofi/config"
     theme_file = "thematic-rofi.rasi"
-    theme_injection_config = {
-        "command": "source",
-        "with_quotes": False,
-        "source_at_index": -2
-    }
     template = """
   {
   	background: {{dark_bg}};

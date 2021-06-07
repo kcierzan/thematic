@@ -1,4 +1,3 @@
-
 try:
     import iterm2
 except:
@@ -36,7 +35,8 @@ class Iterm(base.App):
     async def set_iterm_colors(self, connection, theme: str) -> None:
         profile = await self.get_iterm_profile(connection)
         try:
-            iterm_colors_hex = util.get_theme_data(theme)["iterm_colors"]
+            data = await util.get_theme_data(theme)
+            iterm_colors_hex = data["iterm_colors"]
         except KeyError:
             typer.echo("iTerm2 color data not defined in colorscheme")
             raise
@@ -48,5 +48,3 @@ class Iterm(base.App):
         profile = await self.get_iterm_profile(connection)
         await profile.async_set_normal_font(f"{FONTS[font]['name']} 15")
         await profile.async_set_horizontal_spacing(FONTS[font]["horizontal_spacing"])
-
-

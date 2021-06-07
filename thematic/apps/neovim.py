@@ -11,14 +11,9 @@ class Neovim(base.App):
     supported_oses = {"darwin", "linux"}
     config_file = ".config/nvim/init.vim"
     theme_file = "theme.vim"
-    theme_injection_config = {
-        "command": "source",
-        "with_quotes": False,
-        "source_at_index": -2,
-    }
     theme_template = """
 {{vim_color_config}}
-colorscheme {{vim_colorscheme}}
+colorscheme xcolors
     
 {{vim_overrides}}
     """
