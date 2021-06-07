@@ -50,7 +50,6 @@ tmux_mode_fg:      "#46D9FF"
 bat_theme:         "TwoDark"
 autosuggestions:   "238"
 xcolors_01:        *red
-xcolors_01:        *red
 xcolors_02:        *green
 xcolors_03:        *yellow
 xcolors_04:        *blue

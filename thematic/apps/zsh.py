@@ -10,7 +10,7 @@ class Zsh(base.App):
         "with_quotes": True,
         "source_at_index": -2
     }
-    template = """
+    theme_template = """
     export BAT_THEME='{{bat_theme}}'
     export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg={{autosuggestions}}'
     """

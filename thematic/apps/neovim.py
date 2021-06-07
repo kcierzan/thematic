@@ -14,13 +14,13 @@ class Neovim(base.App):
     theme_injection_config = {
         "command": "source",
         "with_quotes": False,
-        "source_at_index": -2
+        "source_at_index": -2,
     }
     theme_template = """
-    {{vim_color_config}}
-    colorscheme {{vim_colorscheme}}
+{{vim_color_config}}
+colorscheme {{vim_colorscheme}}
     
-    {{vim_overrides}}
+{{vim_overrides}}
     """
 
     @staticmethod
