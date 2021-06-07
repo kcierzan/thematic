@@ -13,7 +13,7 @@ class Xcolors(base.App):
 *.background: {{dark_bg}}
 *.color0: {{dark_bg}}
 *.color1: {{xcolors_01}}
-*.color2:  {{xcolors_02}}
+*.color2: {{xcolors_02}}
 *.color3: {{xcolors_03}}
 *.color4: {{xcolors_04}}
 *.color5: {{xcolors_05}}

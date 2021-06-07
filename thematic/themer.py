@@ -57,8 +57,10 @@ class Themer:
             except AttributeError:
                 ...
 
-        await asyncio.gather(*[safe_render(app) for app in self.apps], *[app.reload() for app in self.apps])
-        # TODO: handle sourcing files?
+        await asyncio.gather(
+            *[safe_render(app) for app in self.apps],
+            *[app.reload() for app in self.apps],
+        )
 
     async def set_theme(self, theme, dry_run):
         self.maybe_create_output_directory()
@@ -69,17 +71,16 @@ class Themer:
                 await self.render_file(
                     app.theme_template,
                     theme_data,
-                    os.path.join(self.output_dir, app.theme_file)
+                    os.path.join(self.output_dir, app.theme_file),
                 )
             except AttributeError:
                 ...
 
-        await asyncio.gather(*[safe_render(app) for app in self.apps],
-                             *[app.set_theme(theme) for app in self.apps],
-                             *[app.reload() for app in self.apps])
-
-        # TODO: handle sourcing files?
-        # TODO: handle dry runs?
+        await asyncio.gather(
+            *[safe_render(app) for app in self.apps],
+            *[app.set_theme(theme) for app in self.apps],
+            *[app.reload() for app in self.apps],
+        )
 
     async def set_font(self, font):
         await asyncio.gather(*[app.set_font(font) for app in self.apps])
