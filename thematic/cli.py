@@ -12,6 +12,8 @@ themer = Themer()
 
 @app.command()
 def colors(theme: str, dry_run: bool = False, iterm: bool = False) -> None:
+    if theme == "":
+        return
     if theme not in themer.themes:
         typer.echo(f"Colorscheme '{theme}' not found. Enter one of the following:")
         for theme in themer.themes:
@@ -25,6 +27,8 @@ def colors(theme: str, dry_run: bool = False, iterm: bool = False) -> None:
 
 @app.command()
 def bars(separator_style: str) -> None:
+    if separator_style == "":
+        return
     if separator_style not in SEPARATORS.keys():
         typer.echo(f"Bar '{separator_style}' not found. Enter one of the following:")
         for bar in SEPARATORS.keys():
@@ -37,6 +41,8 @@ def bars(separator_style: str) -> None:
 
 @app.command()
 def font(font: str) -> None:
+    if font == "":
+        return
     if font not in FONTS:
         typer.echo(f"Font '{font}' not found. Enter one of the following:")
         for f in FONTS.keys():
