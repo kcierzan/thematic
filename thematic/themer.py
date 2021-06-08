@@ -10,7 +10,8 @@ from thematic.apps.alacritty import Alacritty
 from thematic.apps.alfred import Alfred
 from thematic.apps.awesome import Awesomewm
 from thematic.apps.galaxyline import Galaxyline
-from thematic.apps.neovim import Neovim
+
+# from thematic.apps.neovim import Neovim
 from thematic.apps.rofi import Rofi
 from thematic.apps.tmux import Tmux
 from thematic.apps.xcolors import Xcolors
@@ -27,7 +28,7 @@ class Themer:
         apps = (
             Alfred,
             Awesomewm,
-            Neovim,
+            # Neovim, - commented out while we revamp vim themes
             Galaxyline,
             Tmux,
             Rofi,
@@ -62,7 +63,7 @@ class Themer:
             *[app.reload() for app in self.apps],
         )
 
-    async def set_theme(self, theme, dry_run):
+    async def set_theme(self, theme):
         self.maybe_create_output_directory()
         theme_data = await util.get_theme_data(theme)
 

@@ -23,7 +23,7 @@ class Galaxyline(base.App):
   local theme = {}
 
   theme.bg = "{{light_bg}}"
-  theme.line_bg = "{{lightest_bg}}"
+  theme.line_bg = "{{lighter_bg}}"
   theme.fg = "{{foreground}}}"
   theme.green = "{{xcolors_02}}"
   theme.yellow = "{{xcolors_03}}"

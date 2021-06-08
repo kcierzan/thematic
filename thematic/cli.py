@@ -11,7 +11,7 @@ themer = Themer()
 
 
 @app.command()
-def colors(theme: str, dry_run: bool = False, iterm: bool = False) -> None:
+def colors(theme: str) -> None:
     if theme == "":
         return
     if theme not in themer.themes:
@@ -19,10 +19,7 @@ def colors(theme: str, dry_run: bool = False, iterm: bool = False) -> None:
         for theme in themer.themes:
             typer.echo(theme)
         return
-    typer.echo(f"Setting colorscheme to {theme}...")
-    if not dry_run:
-        asyncio.run(themer.set_theme(theme, iterm))
-        typer.echo("Colorscheme loaded.")
+    asyncio.run(themer.set_theme(theme))
 
 
 @app.command()
@@ -34,9 +31,7 @@ def bars(separator_style: str) -> None:
         for bar in SEPARATORS.keys():
             typer.echo(bar)
         return
-    typer.echo(f"Setting bars to {separator_style}...")
     asyncio.run(themer.set_bars(separator_style))
-    typer.echo("Bars updated.")
 
 
 @app.command()
@@ -48,9 +43,7 @@ def font(font: str) -> None:
         for f in FONTS.keys():
             typer.echo(f)
         return
-    typer.echo(f"Setting font to {font}...")
     asyncio.run(themer.set_font(font))
-    typer.echo("Font updated.")
 
 
 @app.command()
