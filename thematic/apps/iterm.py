@@ -6,6 +6,7 @@ import typer
 
 from thematic import util
 from thematic.apps import base
+from thematic.themes import Theme
 from thematic.constants import FONTS
 
 
@@ -24,7 +25,7 @@ class Iterm(base.App):
             profile = await session.async_get_profile()
             return profile
 
-    async def set_theme(self, theme: str) -> None:
+    async def set_theme(self, theme: Theme) -> None:
         connection = iterm2.Connection()
         await self.set_iterm_colors(connection, theme)
 
@@ -32,17 +33,18 @@ class Iterm(base.App):
         connection = iterm2.Connection()
         await self.set_iterm_font(connection, font)
 
-    async def set_iterm_colors(self, connection, theme: str) -> None:
-        profile = await self.get_iterm_profile(connection)
-        try:
-            data = await util.get_theme_data(theme)
-            iterm_colors_hex = data["iterm_colors"]
-        except KeyError:
-            typer.echo("iTerm2 color data not defined in colorscheme")
-            raise
-        for color_name, hex in iterm_colors_hex.items():
-            color = iterm2.Color(*util.hex_to_rgb(hex))
-            await getattr(profile, f"async_set_{color_name}_color")(color)
+    async def set_iterm_colors(self, connection, theme: Theme) -> None:
+        ...
+        # profile = await self.get_iterm_profile(connection)
+        # try:
+        #     data = theme.asdict()
+        #     iterm_colors_hex = data["iterm_colors"]
+        # except KeyError:
+        #     typer.echo("iTerm2 color data not defined in colorscheme")
+        #     raise
+        # for color_name, hex in iterm_colors_hex.items():
+        #     color = iterm2.Color(*util.hex_to_rgb(hex))
+        #     await getattr(profile, f"async_set_{color_name}_color")(color)
 
     async def set_iterm_font(self, connection, font: str) -> None:
         profile = await self.get_iterm_profile(connection)

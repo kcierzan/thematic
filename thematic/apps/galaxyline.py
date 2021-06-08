@@ -1,3 +1,4 @@
+from thematic.themes import Theme
 from thematic.apps import base
 
 
@@ -7,7 +8,7 @@ class Galaxyline(base.App):
         pass
 
     @staticmethod
-    async def set_theme(theme: str) -> None:
+    async def set_theme(theme: Theme) -> None:
         pass
 
     @staticmethod
@@ -22,8 +23,8 @@ class Galaxyline(base.App):
     theme_template = """
   local theme = {}
 
-  theme.bg = "{{light_bg}}"
-  theme.line_bg = "{{lighter_bg}}"
+  theme.bg = "{{bg_bright}}"
+  theme.line_bg = "{{bg_brighter}}"
   theme.fg = "{{foreground}}}"
   theme.green = "{{xcolors_02}}"
   theme.yellow = "{{xcolors_03}}"

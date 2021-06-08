@@ -1,4 +1,5 @@
 from thematic import util
+from thematic.themes import Theme
 from thematic.apps import base
 
 
@@ -10,25 +11,25 @@ class Tmux(base.App):
     theme_template = """
 set -g status-position bottom
 set -g status-justify "left"
-set -g status-style "bg={{light_bg}}"
-set -g window-style "bg={{light_bg}}"
-set -g mode-style "bg={{lightest_bg}} fg={{tmux_mode_fg}}"
+set -g status-style "bg={{bg_bright}}"
+set -g window-style "bg={{bg_bright}}"
+set -g mode-style "bg={{bg_brightest}} fg={{tmux_mode_fg}}"
 
 # --------- LEFT HAND SEGMENTS ------------------
 # clear status-left
 set -g status-left ""
 
 # start far left hand segment
-set -ga status-left "#[fg={{lightest_bg}} bg={{light_bg}}]$FAR_LEFT_SEPARATOR"
+set -ga status-left "#[fg={{bg_brightest}} bg={{bg_bright}}]$FAR_LEFT_SEPARATOR"
 
 # tmux logo
-set -ga status-left "#[fg=colour03 bg={{lightest_bg}}]﬿ "
+set -ga status-left "#[fg=colour03 bg={{bg_brightest}}]﬿ "
 
 # session name
-set -ga status-left "#[fg=colour05 bg={{lighter_bg}}] #S"
+set -ga status-left "#[fg=colour05 bg={{bg_brighter}}] #S"
 
 # end right hand segment
-set -ga status-left "#[fg={{lighter_bg}} bg={{light_bg}}]$LH_RIGHT_SEPARATOR "
+set -ga status-left "#[fg={{bg_brighter}} bg={{bg_bright}}]$LH_RIGHT_SEPARATOR "
 
 set -g status-left-length 100
 
@@ -37,22 +38,22 @@ set -g status-left-length 100
 set -g status-right ""
 
 # start right hand segment
-set -ga status-right "#[fg={{lighter_bg}}]$RH_LEFT_SEPARATOR"
+set -ga status-right "#[fg={{bg_brighter}}]$RH_LEFT_SEPARATOR"
 
 # 12 hour time with AM/PM
-set -ga status-right "#[fg={{xcolors_03}} bg={{lighter_bg}}]%I:%M %p"
+set -ga status-right "#[fg={{xcolors_03}} bg={{bg_brighter}}]%I:%M %p"
 
 # end right hand segment
-set -ga status-right "#[fg={{lighter_bg}} bg={{light_bg}}]$RH_RIGHT_SEPARATOR "
+set -ga status-right "#[fg={{bg_brighter}} bg={{bg_bright}}]$RH_RIGHT_SEPARATOR "
 
 # start right hand segment
-set -ga status-right "#[fg={{lighter_bg}} bg={{light_bg}}]$RH_LEFT_SEPARATOR"
+set -ga status-right "#[fg={{bg_brighter}} bg={{bg_bright}}]$RH_LEFT_SEPARATOR"
 
 # Short date
-set -ga status-right "#[fg={{xcolors_02}} bg={{lighter_bg}}]%b %d"
+set -ga status-right "#[fg={{xcolors_02}} bg={{bg_brighter}}]%b %d"
 
 # end right hand segment
-set -ga status-right "#[fg={{lighter_bg}} bg={{light_bg}}]$RH_RIGHT_SEPARATOR "
+set -ga status-right "#[fg={{bg_brighter}} bg={{bg_bright}}]$RH_RIGHT_SEPARATOR "
 
 # add battery status
 set -ga status-right "#{battery_status_fg}#{battery_percentage} "
@@ -70,13 +71,13 @@ set -g window-status-format ""
 set -ga window-status-format "#[bg=colour00]"
 
 # begin segment
-set -ga window-status-format "#[fg={{lighter_bg}} bg={{light_bg}}]$LH_LEFT_SEPARATOR"
+set -ga window-status-format "#[fg={{bg_brighter}} bg={{bg_bright}}]$LH_LEFT_SEPARATOR"
 
 # current path
-set -ga window-status-format "#[fg=colour242 bg={{lighter_bg}}]#{b:pane_current_path}"
+set -ga window-status-format "#[fg=colour242 bg={{bg_brighter}}]#{b:pane_current_path}"
 
 # end segment
-set -ga window-status-format "#[fg={{lighter_bg}} bg={{light_bg}}]$LH_RIGHT_SEPARATOR "
+set -ga window-status-format "#[fg={{bg_brighter}} bg={{bg_bright}}]$LH_RIGHT_SEPARATOR "
 
 # --------- CURRENT WINDOW ----------------
 # clear curent window
@@ -86,24 +87,24 @@ set -g window-status-current-format ""
 set -ga window-status-current-format "#[bg=colour00]"
 
 # begin segment
-set -ga window-status-current-format "#[fg={{lighter_bg}} bg={{light_bg}}]$LH_LEFT_SEPARATOR"
+set -ga window-status-current-format "#[fg={{bg_brighter}} bg={{bg_bright}}]$LH_LEFT_SEPARATOR"
 
 # zoomed status
-set -ga window-status-current-format "#[fg={{xcolors_04}} bg={{lighter_bg}}]#{?window_zoomed_flag,[ﯫ] ,}"
+set -ga window-status-current-format "#[fg={{xcolors_04}} bg={{bg_brighter}}]#{?window_zoomed_flag,[ﯫ] ,}"
 
 # explicit name, current path, or zsh
 set -ga window-status-current-format "#{?#{==:#{window_name},zsh},#{b:pane_current_path},#W}"
 
 # end segment
-set -ga window-status-current-format "#[fg={{lighter_bg}} bg={{light_bg}}]$LH_RIGHT_SEPARATOR "
+set -ga window-status-current-format "#[fg={{bg_brighter}} bg={{bg_bright}}]$LH_RIGHT_SEPARATOR "
 
 # ----------------- MISC --------------------
 set -g window-status-separator ""
 
-set -g pane-active-border-style "fg={{dark_bg}} bg={{dark_bg}}"
-set -g pane-border-style "fg={{dark_bg}} bg={{dark_bg}}"
+set -g pane-active-border-style "fg={{background}} bg={{background}}"
+set -g pane-border-style "fg={{background}} bg={{background}}"
 
-set -g window-active-style "bg={{dark_bg}}"
+set -g window-active-style "bg={{background}}"
 set -g window-status-activity-style "fg={{xcolors_03}}"
     """
 
@@ -122,7 +123,7 @@ FAR_RIGHT_SEPARATOR="{{separators[5]}}"
         await util.call_with_shell(command)
 
     @staticmethod
-    async def set_theme(theme: str) -> None:
+    async def set_theme(theme: Theme) -> None:
         pass
 
     @staticmethod

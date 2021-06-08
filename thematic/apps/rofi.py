@@ -1,9 +1,10 @@
 from thematic.apps import base
+from thematic.themes import Theme
 
 
 class Rofi(base.App):
     @staticmethod
-    async def set_theme(theme: str) -> None:
+    async def set_theme(theme: Theme) -> None:
         pass
 
     @staticmethod
@@ -19,9 +20,9 @@ class Rofi(base.App):
     theme_file = "thematic-rofi.rasi"
     template = """
   {
-  	background: {{dark_bg}};
+  	background: {{background}};
   	white07-transparent: {{foreground}}20;
-  	base03: {{lightest_bg}};
+  	base03: {{bg_brightest}};
   	white07: {{foreground}};
   	base08: {{xcolors_09}};
   	base09: {{xcolors_01}};

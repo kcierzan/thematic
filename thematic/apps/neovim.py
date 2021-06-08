@@ -26,6 +26,7 @@ colorscheme xcolors
     async def set_font(font: str) -> None:
         pass
 
+    # TODO: fix the reloading of lua plugins
     @staticmethod
     async def reload() -> None:
         if not os.environ.get(NVIM_SOCKET):
