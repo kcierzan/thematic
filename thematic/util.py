@@ -10,10 +10,6 @@ import aiofiles
 import yaml
 import typer
 
-from thematic.constants import (
-    THEME_DIR,
-)
-
 
 async def load_yaml(theme_file):
     async with aiofiles.open(theme_file, "r") as f:
@@ -23,11 +19,6 @@ async def load_yaml(theme_file):
         except yaml.YAMLError:
             typer.echo("Theme failed to load")
             raise
-
-
-async def get_theme_data(theme):
-    theme_file = os.path.join(THEME_DIR, theme + ".yaml")
-    return await load_yaml(theme_file)
 
 
 def hex_to_rgb(hex):

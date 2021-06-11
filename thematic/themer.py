@@ -5,7 +5,7 @@ import aiofiles
 from jinja2 import Template
 import typer
 
-from thematic.themes import Theme, THEMES
+from thematic.themes import THEMES
 from thematic.apps.alacritty import Alacritty
 from thematic.apps.alfred import Alfred
 from thematic.apps.awesome import Awesomewm
@@ -15,7 +15,7 @@ from thematic.apps.rofi import Rofi
 from thematic.apps.tmux import Tmux
 from thematic.apps.xcolors import Xcolors
 from thematic.apps.zsh import Zsh
-from thematic.constants import OPERATING_SYSTEM, SEPARATORS, THEME_DIR
+from thematic.constants import OPERATING_SYSTEM, SEPARATORS
 
 
 class Themer:

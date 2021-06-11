@@ -1,6 +1,6 @@
 import abc
 
-from thematic.themes import Theme
+from thematic.themes import base
 
 class App(abc.ABC):
     theme_template = None
@@ -10,7 +10,7 @@ class App(abc.ABC):
 
     @staticmethod
     @abc.abstractmethod
-    async def set_theme(theme: Theme) -> None:
+    async def set_theme(theme: base.Theme) -> None:
         ...
 
     @staticmethod
