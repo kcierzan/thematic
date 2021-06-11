@@ -1,6 +1,6 @@
 from thematic import util
 from thematic.apps import base
-from thematic.themes import Theme
+from thematic.themes import base as base_theme
 
 
 class Alfred(base.App):
@@ -15,7 +15,7 @@ class Alfred(base.App):
         pass
 
     @staticmethod
-    async def set_theme(theme: Theme) -> None:
+    async def set_theme(theme: base_theme.Theme) -> None:
         command = (
             f'osascript -e tell application "Alfred 4" to set theme "{theme.name}"'
         )

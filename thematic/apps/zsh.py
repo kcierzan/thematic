@@ -1,4 +1,4 @@
-from thematic.themes import Theme
+from thematic.themes import base as base_theme
 from thematic.apps import base
 
 
@@ -12,7 +12,7 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg={{autosuggestions}}'
     """
 
     @staticmethod
-    async def set_theme(theme: Theme) -> None:
+    async def set_theme(theme: base_theme.Theme) -> None:
         pass
 
     @staticmethod

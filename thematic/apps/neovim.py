@@ -10,7 +10,7 @@ from thematic.constants import NVIM_SOCKET
 class Neovim(base.App):
     supported_oses = {"darwin", "linux"}
     config_file = ".config/nvim/init.vim"
-    theme_file = "theme.vim"
+    theme_file = "nvim-theme.lua"
     # this should be a lua file of a table returning multiple values
     theme_template = """
 local syntax = {
@@ -32,7 +32,7 @@ local syntax = {
     Label = { {{Label}} };
     Macro = { {{Macro}} };
     Number = { {{Number}} };
-    Operator = { {{}} };
+    Operator = { {{Operator}} };
     PreProc = { {{PreProc}} };
     PreCondit = { {{PreCondit}} };
     Repeat = { {{Repeat}} };
@@ -132,7 +132,7 @@ local syntax = {
     NonText = { {{NonText}} };
     Pmenu = { {{Pmenu}} };
     PmenuSel = { {{PmenuSel}} };
-    PmenuSelBold = { {{}} };
+    PmenuSelBold = { {{PmenuSelBold}} };
     PmenuSbar = { {{PmenuSbar}} };
     PmenuThumb = {  {{PmenuThumb}} };
     Question = { {{Question}} };
@@ -156,12 +156,9 @@ local syntax = {
     Whitespace = { {{Whitespace}} };
     WildMenu =   { {{WildMenu}} };
     Visual = { {{Visual}} };
-    VisualNOS = { {{VisualNOS}} }
-
+    VisualNOS = { {{VisualNOS}} };
 }
-local plugins = {
-
-}
+return syntax
     """
 
     @staticmethod

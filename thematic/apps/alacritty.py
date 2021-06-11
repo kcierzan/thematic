@@ -4,7 +4,7 @@ import aiofiles
 import yaml
 
 from thematic import util
-from thematic.themes import Theme
+from thematic.themes import base as base_theme
 from thematic.apps import base
 from thematic.constants import ALACRITTY_CONFIG, FONTS
 
@@ -42,7 +42,7 @@ class Alacritty(base.App):
             await f.write(yaml.dump(current, default_flow_style=False))
 
     @staticmethod
-    async def set_theme(theme: Theme) -> None:
+    async def set_theme(theme: base_theme.Theme) -> None:
         config_path = os.path.join(os.path.expanduser("~"), ALACRITTY_CONFIG)
         current = await util.load_yaml(config_path)
         new_colors = {

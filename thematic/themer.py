@@ -5,7 +5,6 @@ import aiofiles
 from jinja2 import Template
 import typer
 
-from thematic.themes import THEMES
 from thematic.apps.alacritty import Alacritty
 from thematic.apps.alfred import Alfred
 from thematic.apps.awesome import Awesomewm
@@ -13,9 +12,14 @@ from thematic.apps.base import App
 from thematic.apps.galaxyline import Galaxyline
 from thematic.apps.rofi import Rofi
 from thematic.apps.tmux import Tmux
+from thematic.apps.neovim import Neovim
 from thematic.apps.xcolors import Xcolors
 from thematic.apps.zsh import Zsh
 from thematic.constants import OPERATING_SYSTEM, SEPARATORS
+from thematic.themes.onedark import Onedark
+
+
+THEMES = {theme.name: theme for theme in (Onedark,)}
 
 
 class Themer:
@@ -23,7 +27,7 @@ class Themer:
         apps = (
             Alfred,
             Awesomewm,
-            # Neovim, - commented out while we revamp vim themes
+            Neovim,
             Galaxyline,
             Tmux,
             Rofi,

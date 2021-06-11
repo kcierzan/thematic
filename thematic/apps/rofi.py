@@ -1,10 +1,10 @@
 from thematic.apps import base
-from thematic.themes import Theme
+from thematic.themes import base as base_theme
 
 
 class Rofi(base.App):
     @staticmethod
-    async def set_theme(theme: Theme) -> None:
+    async def set_theme(theme: base_theme.Theme) -> None:
         pass
 
     @staticmethod

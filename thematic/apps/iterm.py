@@ -6,7 +6,7 @@ import typer
 
 from thematic import util
 from thematic.apps import base
-from thematic.themes import Theme
+from thematic.themes import base as base_theme
 from thematic.constants import FONTS
 
 
@@ -25,7 +25,7 @@ class Iterm(base.App):
             profile = await session.async_get_profile()
             return profile
 
-    async def set_theme(self, theme: Theme) -> None:
+    async def set_theme(self, theme: base_theme.Theme) -> None:
         connection = iterm2.Connection()
         await self.set_iterm_colors(connection, theme)
 
@@ -33,7 +33,7 @@ class Iterm(base.App):
         connection = iterm2.Connection()
         await self.set_iterm_font(connection, font)
 
-    async def set_iterm_colors(self, connection, theme: Theme) -> None:
+    async def set_iterm_colors(self, connection, theme: base_theme.Theme) -> None:
         ...
         # profile = await self.get_iterm_profile(connection)
         # try:

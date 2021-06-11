@@ -1,5 +1,5 @@
 from thematic import util
-from thematic.themes import Theme
+from thematic.themes import base as base_theme
 from thematic.apps import base
 
 
@@ -123,7 +123,7 @@ FAR_RIGHT_SEPARATOR="{{separators[5]}}"
         await util.call_with_shell(command)
 
     @staticmethod
-    async def set_theme(theme: Theme) -> None:
+    async def set_theme(theme: base_theme.Theme) -> None:
         pass
 
     @staticmethod

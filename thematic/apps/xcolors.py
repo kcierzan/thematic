@@ -2,7 +2,7 @@ import os
 
 from thematic import util
 from thematic.apps import base
-from thematic.themes import Theme
+from thematic.themes import base as base_theme
 
 
 class Xcolors(base.App):
@@ -35,7 +35,7 @@ Sxiv.background: {{background}}
     """
 
     @staticmethod
-    async def set_theme(theme: Theme) -> None:
+    async def set_theme(theme: base_theme.Theme) -> None:
         pass
 
     @staticmethod

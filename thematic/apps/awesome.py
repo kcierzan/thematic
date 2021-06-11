@@ -1,5 +1,5 @@
 from thematic.apps import base
-from thematic.themes import Theme
+from thematic.themes import base as base_theme
 from thematic.util import call_with_shell
 
 
@@ -7,7 +7,7 @@ class Awesomewm(base.App):
     supported_oses = {"linux"}
 
     @staticmethod
-    async def set_theme(theme: Theme) -> None:
+    async def set_theme(theme: base_theme.Theme) -> None:
         pass
 
     @staticmethod
