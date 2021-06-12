@@ -17,9 +17,10 @@ from thematic.apps.xcolors import Xcolors
 from thematic.apps.zsh import Zsh
 from thematic.constants import OPERATING_SYSTEM, SEPARATORS
 from thematic.themes.onedark import Onedark
+from thematic.themes.gruvbox_dark import GruvboxDark
 
 
-THEMES = {theme.name: theme for theme in (Onedark,)}
+THEMES = {theme.name: theme for theme in (Onedark, GruvboxDark)}
 
 
 class Themer:
