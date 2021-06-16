@@ -46,7 +46,6 @@ light_bg:          *bg1
 lighter_bg:        *bg2
 lightest_bg:       *bg3
 tmux_mode_fg:      *orange
-bat_theme:         "gruvbox-dark"
 autosuggestions:   "238"
 xcolors_01:        *red
 xcolors_02:        *green

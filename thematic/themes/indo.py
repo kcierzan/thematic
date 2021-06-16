@@ -40,8 +40,6 @@ class Indo(base.Theme):
         xcolors_15=light_purple,
     )
     # TODO
-    bat_theme = "TwoDark"
     autosuggestions = "238"
     tmux_mode_fg = red
-
 

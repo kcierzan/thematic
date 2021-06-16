@@ -4,26 +4,25 @@ from thematic.themes import base
 class Dracula(base.Theme):
     name = "dracula"
 
-    foreground = '#f9f9f4'
-    background = '#272936'
-    bg_bright = '#313446'
-    bg_brighter = '#474b64'
-    bg_brightest = '#555a78'
-    red = '#ff6d67'
-    red_bright = '#473536'
-    cyan = '#99ecfd'
-    purple = '#c9a8fa'
-    blue = '#7ad5f1'
-    yellow = '#f3f89d'
-    orange = '#ef9062'
-    green = '#59f68d'
-    black = '#2e3140'
-    black_bright = '#1A181A'
-    pink = '#ff92d0'
-    white = '#c7c7c7'
-    white_bright = '#feffff'
+    foreground = "#f9f9f4"
+    background = "#272936"
+    bg_bright = "#313446"
+    bg_brighter = "#474b64"
+    bg_brightest = "#555a78"
+    red = "#ff6d67"
+    red_bright = "#473536"
+    cyan = "#99ecfd"
+    purple = "#c9a8fa"
+    blue = "#7ad5f1"
+    yellow = "#f3f89d"
+    orange = "#ef9062"
+    green = "#59f68d"
+    black = "#2e3140"
+    black_bright = "#1A181A"
+    pink = "#ff92d0"
+    white = "#c7c7c7"
+    white_bright = "#feffff"
 
-    bat_theme = "Dracula"
     autosuggestions = "238"
     tmux_mode_fg = green
 
@@ -47,5 +46,4 @@ class Dracula(base.Theme):
         xcolors_14=cyan,
         xcolors_15=white_bright,
     )
-
 

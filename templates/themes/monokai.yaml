@@ -1,7 +1,6 @@
 shade: "dark"
 dark_bg: "#2d2d2d"
 light_bg: "#252525"
-bat_theme: "Monokai Extended Origin"
 autosuggestions: "238"
 vim_colorscheme: "vim-monokai-tasty"
 vim_overrides: |+

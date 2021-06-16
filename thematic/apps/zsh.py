@@ -7,7 +7,6 @@ class Zsh(base.App):
     config_file = ".zshenv"
     theme_file = "theme.zsh"
     theme_template = """
-export BAT_THEME='{{bat_theme}}'
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg={{autosuggestions}}'
     """
 

@@ -26,7 +26,6 @@ class Onedark(base.Theme):
     purple_bright = "#a9a1e1"
     white_bright = "#afb0b5"
 
-    bat_theme = "TwoDark"
     autosuggestions = "238"
     tmux_mode_fg = blue
 

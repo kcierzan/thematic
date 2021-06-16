@@ -22,7 +22,6 @@ class GruvboxDark(base.Theme):
     white_bright = "#a89984"
 
     autosuggestions = "238"
-    bat_theme = "gruvbox-dark"
     tmux_mode_fg = orange
 
     xcolors = base.Xcolors(

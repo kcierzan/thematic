@@ -4,26 +4,25 @@ from thematic.themes import base
 class SonokaiShusia(base.Theme):
     name = "sonokai-shusia"
 
-    foreground = '#E3E1E4'
-    background = '#2D2A2E'
-    bg_bright = '#343136'
-    bg_brighter = '#3B383E'
-    bg_brightest = '#423F46'
-    red_bright = '#473536'
-    cyan = '#7AD5F1'
-    blue = '#72CCE8'
-    blue_bright = '#7AD5F1'
-    orange = '#EF9062'
-    yellow = '#E5C463'
-    green = '#9ECD6F'
-    black = '#1A181A'
-    purple = '#AB9DF2'
-    red = '#FF6D7E'
-    green_bright = '#A5E179'
-    white = '#828A9A'
+    foreground = "#E3E1E4"
+    background = "#2D2A2E"
+    bg_bright = "#343136"
+    bg_brighter = "#3B383E"
+    bg_brightest = "#423F46"
+    red_bright = "#473536"
+    cyan = "#7AD5F1"
+    blue = "#72CCE8"
+    blue_bright = "#7AD5F1"
+    orange = "#EF9062"
+    yellow = "#E5C463"
+    green = "#9ECD6F"
+    black = "#1A181A"
+    purple = "#AB9DF2"
+    red = "#FF6D7E"
+    green_bright = "#A5E179"
+    white = "#828A9A"
 
     autosuggestions = "238"
-    bat_theme = "Monokai Extended Origin"
     tmux_mode_fg = orange
 
     xcolors = base.Xcolors(

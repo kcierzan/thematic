@@ -357,7 +357,6 @@ class NeovimPluginTheme:
 class Theme:
     name = ""
     autosuggestions = ""
-    bat_theme = ""
     tmux_mode_fg = ""
     bg_bright = ""
     bg_brighter = ""
@@ -398,7 +397,6 @@ class Theme:
         return {
             "name": cls.name,
             "autosuggestions": cls.autosuggestions,
-            "bat_theme": cls.bat_theme,
             "tmux_mode_fg": cls.tmux_mode_fg,
             "bg_bright": cls.bg_bright,
             "bg_brighter": cls.bg_brighter,
