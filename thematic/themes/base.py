@@ -113,7 +113,7 @@ class NeovimTheme:
     TSContMacro: Dict[str, str] = field(default_factory=dict)
     TSEmphasis: Dict[str, str] = field(default_factory=dict)
     TSError: Dict[str, str] = field(default_factory=dict)
-    TSExeption: Dict[str, str] = field(default_factory=dict)
+    TSException: Dict[str, str] = field(default_factory=dict)
     TSField: Dict[str, str] = field(default_factory=dict)
     TSFloat: Dict[str, str] = field(default_factory=dict)
     TSFuncMacro: Dict[str, str] = field(default_factory=dict)
