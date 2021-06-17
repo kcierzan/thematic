@@ -168,23 +168,4 @@ class Onedark(base.Theme):
         lCursor={"fg": "NONE", "bg": "NONE", "style": "reverse"},
         vCursor={"fg": "NONE", "bg": "NONE", "style": "reverse"},
     )
-    nvim_plugins = base.NeovimPluginTheme(
-        # pythonBuiltin={"fg": red, "style": "italic"},
-        # pythonException={"fg": purple},
-        # pythonDecoratorName={"fg": cyan, "style": "italic"},
-        # pythonExClass={"fg": red, "style": "italic"},
-        # pythonBuiltinType={"fg": yellow},
-        # pythonBuiltinObj={"fg": yellow},
-        # pythonDottedName={"fg": cyan, "style": "italic"},
-        # pythonBuiltinFunc={"fg": blue},
-        # pythonFunction={"fg": blue},
-        # pythonDecorator={"fg": cyan, "style": "italic"},
-        # pythonInclude={"fg": purple},
-        # pythonImport={"fg": purple},
-        # pythonOperator={"fg": purple},
-        # pythonConditional={"fg": purple},
-        # pythonRepeat={"fg": purple},
-        # pythonNone={"fg": yellow},
-        # pythonCoding={"fg": bg_brighter},
-        # pythonDot={"fg": bg_brighter},
-    )
+    nvim_plugins = base.NeovimPluginTheme()

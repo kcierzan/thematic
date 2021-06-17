@@ -344,11 +344,11 @@ return syntax, plugins
     """
 
     @staticmethod
-    async def set_theme(theme: str) -> None:
+    async def set_theme(_: str) -> None:
         pass
 
     @staticmethod
-    async def set_font(font: str) -> None:
+    async def set_font(_: str) -> None:
         pass
 
     # TODO: fix the reloading of lua plugins
@@ -361,5 +361,6 @@ return syntax, plugins
         nvim_socket = os.environ.get(NVIM_SOCKET)
 
         if nvim_socket and os.path.exists(nvim_socket):
-            command = "nvr --nostart --remote-send ':so ~/.config/nvim/init.vim<CR>'"
+            # requires nvim-reload plugin be installed
+            command = "nvr --nostart --remote-send ':Restart<CR>'"
             await util.call_with_shell(command)
