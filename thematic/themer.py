@@ -20,9 +20,10 @@ from thematic.themes.gruvbox_dark import GruvboxDark
 from thematic.themes.onedark import Onedark
 from thematic.themes.indo import Indo
 from thematic.themes.tokyo_night import TokyoNight
+from thematic.themes.dracula import Dracula
 
 
-THEMES = {theme.name: theme for theme in (Onedark, GruvboxDark, Indo, TokyoNight)}
+THEMES = {theme.name: theme for theme in (Onedark, GruvboxDark, Indo, TokyoNight, Dracula)}
 
 
 class Themer:

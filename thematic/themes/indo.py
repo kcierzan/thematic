@@ -62,7 +62,7 @@ class Indo(base.Theme):
         CursorColumn={"fg": "NONE", "bg": light_purple},
         CursorIM={"fg": "NONE", "bg": "NONE", "style": "reverse"},
         CursorLine={"fg": "NONE", "bg": bg_bright},
-        CursorLineNr={"fg": blue, "bg": bg_bright, "style": "bold"},
+        CursorLineNr={"fg": orange, "bg": bg_bright, "style": "bold"},
         Define={"fg": purple},
         DiffAdd={"fg": background, "bg": green},
         DiffChange={"fg": background, "bg": yellow},
