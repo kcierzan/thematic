@@ -4,16 +4,16 @@ from thematic.themes import base as base_theme
 
 class Rofi(base.App):
     @staticmethod
-    async def set_theme(theme: base_theme.Theme) -> None:
-        pass
+    async def set_theme(_: base_theme.Theme) -> None:
+        ...
 
     @staticmethod
-    async def set_font(font: str) -> None:
-        pass
+    async def set_font(_: str) -> None:
+        ...
 
     @staticmethod
     async def reload() -> None:
-        pass
+        ...
 
     supported_oses = {"linux"}
     config_file = ".config/rofi/config"

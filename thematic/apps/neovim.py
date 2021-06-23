@@ -162,6 +162,7 @@ local syntax = {
     iCursor =  { {{iCursor}} };
     lCursor =   { {{lCursor}} };
     vCursor = { {{vCursor}} };
+    qfFileName = { {{qfFileName}} };
 }
 local plugins = {
     DashboardCenter = { {{DashboardCenter}} };

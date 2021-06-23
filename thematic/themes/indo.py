@@ -86,7 +86,7 @@ class Indo(base.Theme):
         Macro={"fg": yellow},
         MatchParen={"fg": red, "bg": "NONE"},
         ModeMsg={"fg": foreground, "bg": "NONE", "style": "bold"},
-        NonText={"fg": bg_bright},
+        NonText={"fg": green},
         NormalFloat={"fg": foreground, "bg": bg_bright},
         Number={"fg": green},
         Operator={"fg": purple},
@@ -100,7 +100,7 @@ class Indo(base.Theme):
         Question={"fg": yellow},
         QuickFixLine={"fg": purple, "style": "bold"},
         Repeat={"fg": purple},
-        Search={"fg": background, "bg": yellow},
+        Search={"fg": bg_bright, "bg": yellow},
         Special={"fg": blue},
         SpecialChar={"fg": yellow},
         SpecialComment={"fg": bg_bright},
@@ -161,6 +161,7 @@ class Indo(base.Theme):
         iCursor={"fg": bg_bright, "bg": "NONE", "style": "reverse"},
         lCursor={"fg": "NONE", "bg": "NONE", "style": "reverse"},
         vCursor={"fg": "NONE", "bg": "NONE", "style": "reverse"},
+        qfFileName={"fg": yellow},
     )
     nvim_plugins = base.NeovimPluginTheme()
 

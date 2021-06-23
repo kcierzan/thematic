@@ -7,12 +7,12 @@ class Awesomewm(base.App):
     supported_oses = {"linux"}
 
     @staticmethod
-    async def set_theme(theme: base_theme.Theme) -> None:
-        pass
+    async def set_theme(_: base_theme.Theme) -> None:
+        ...
 
     @staticmethod
     async def set_font(font: str) -> None:
-        pass
+        ...
 
     @staticmethod
     async def reload():

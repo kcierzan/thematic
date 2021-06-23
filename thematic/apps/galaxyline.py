@@ -5,15 +5,15 @@ from thematic.apps import base
 class Galaxyline(base.App):
     @staticmethod
     async def reload() -> None:
-        pass
+        ...
 
     @staticmethod
-    async def set_theme(theme: base_theme.Theme) -> None:
-        pass
+    async def set_theme(_: base_theme.Theme) -> None:
+        ...
 
     @staticmethod
-    async def set_font(font: str) -> None:
-        pass
+    async def set_font(_: str) -> None:
+        ...
 
     # TODO: how do we reload the theme?
     supported_oses = {"linux", "darwin"}

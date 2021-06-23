@@ -173,6 +173,7 @@ class NeovimTheme:
     iCursor: Dict[str, str] = field(default_factory=dict)
     lCursor: Dict[str, str] = field(default_factory=dict)
     vCursor: Dict[str, str] = field(default_factory=dict)
+    qfFileName: Dict[str, str] = field(default_factory=dict)
 
 
 @dataclass
