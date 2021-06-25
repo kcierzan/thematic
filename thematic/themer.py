@@ -23,10 +23,10 @@ from thematic.themes.onedark import Onedark
 from thematic.themes.tokyo_night import TokyoNight
 
 
-THEMES = {theme.name: theme for theme in (Onedark, GruvboxDark, Indo, TokyoNight, Dracula)}
-
-
 class Themer:
+
+    themes = {theme.name: theme for theme in (Onedark, GruvboxDark, Indo, TokyoNight, Dracula)}
+
     def __init__(self):
         apps = (
             Alfred,
@@ -41,7 +41,6 @@ class Themer:
         )
         self.apps = [app() for app in apps if OPERATING_SYSTEM in app.supported_oses]
         self.output_dir = os.path.join(os.path.expanduser("~"), ".thematic")
-        self.themes = THEMES.keys()
 
     async def set_bars(self, separator_type: str):
         self._maybe_create_output_directory()
@@ -68,13 +67,13 @@ class Themer:
                 return
             await self._render_file(
                 app.theme_template,
-                THEMES[theme].asdict(),
+                self.themes[theme].asdict(),
                 os.path.join(self.output_dir, app.theme_file),
             )
 
         await asyncio.gather(
             *[safe_render(app) for app in self.apps],
-            *[app.set_theme(THEMES[theme]) for app in self.apps],
+            *[app.set_theme(self.themes[theme]) for app in self.apps],
             *[app.reload() for app in self.apps],
         )
 
