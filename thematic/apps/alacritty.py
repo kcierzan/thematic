@@ -10,7 +10,7 @@ from thematic.constants import ALACRITTY_CONFIG, FONTS
 
 
 class Alacritty(base.App):
-    supported_oses = {"linux", "darwin"}
+    supported_oses = {"darwin"}
 
     @staticmethod
     async def reload() -> None:
@@ -76,6 +76,3 @@ class Alacritty(base.App):
         current.update(new_colors)
         async with aiofiles.open(config_path, "w") as f:
             await f.write(yaml.dump(current, default_flow_style=False))
-
-
-
