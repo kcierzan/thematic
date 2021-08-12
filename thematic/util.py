@@ -1,14 +1,15 @@
 import asyncio
-import os
+
+import aiofiles
+import typer
+import yaml
 
 try:
     from yaml import CLoader as Loader
 except:
     from yaml import Loader
 
-import aiofiles
-import yaml
-import typer
+
 
 
 async def load_yaml(theme_file):

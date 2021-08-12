@@ -14,12 +14,12 @@ class Alacritty(base.App):
 
     @staticmethod
     async def reload() -> None:
-        pass
+        ...
 
     @staticmethod
     async def set_font(font: str) -> None:
         config_path = os.path.join(os.path.expanduser("~"), ALACRITTY_CONFIG)
-        current = await util.load_yaml(config_path)
+        current_config = await util.load_yaml(config_path)
         new_font = {
             "font": {
                 "bold": {
@@ -37,9 +37,9 @@ class Alacritty(base.App):
         x_offset = FONTS[font].get("x_offset")
         if x_offset:
             new_font["font"]["offset"] = {"x": x_offset}
-        current.update(new_font)
+        current_config.update(new_font)
         async with aiofiles.open(config_path, "w") as f:
-            await f.write(yaml.dump(current, default_flow_style=False))
+            await f.write(yaml.dump(current_config, default_flow_style=False))
 
     @staticmethod
     async def set_theme(theme: base_theme.Theme) -> None:
