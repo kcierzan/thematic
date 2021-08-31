@@ -163,5 +163,9 @@ class Indo(base.Theme):
         vCursor={"fg": "NONE", "bg": "NONE", "style": "reverse"},
         qfFileName={"fg": yellow},
     )
-    nvim_plugins = base.NeovimPluginTheme()
+    nvim_plugins = base.NeovimPluginTheme(
+        NvimTreeFolderName={"fg": foreground},
+        NvimTreeEmptyFolderName={"fg": bg_brighter},
+        NvimTreeOpenedFolderName={"fg": foreground},
+    )
 

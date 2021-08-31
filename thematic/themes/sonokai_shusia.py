@@ -46,3 +46,7 @@ class SonokaiShusia(base.Theme):
         xcolors_15=white,
     )
 
+    nvim_plugins = base.NeovimPluginTheme(
+        NvimTreeFolderName={"fg": foreground},
+        NvimTreeOpenedFolderName={"fg": foreground}
+    )

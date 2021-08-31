@@ -48,4 +48,9 @@ class SolarizedDark(base.Theme):
         xcolors_14=cyan,
         xcolors_15=white_bright,
     )
+    nvim_plugins = base.NeovimPluginTheme(
+        NvimTreeFolderName={"fg": foreground},
+        NvimTreeEmptyFolderName={"fg": bg_brighter},
+        NvimTreeOpenedFolderName={"fg": foreground},
+    )
 

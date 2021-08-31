@@ -155,5 +155,6 @@ class GruvboxDark(base.Theme):
     )
     nvim_plugins = base.NeovimPluginTheme(
         NvimTreeFolderName={"fg": foreground},
-        NvimTreeOpenedFolderName={"fg": foreground}
+        NvimTreeEmptyFolderName={"fg": bg_brighter},
+        NvimTreeOpenedFolderName={"fg": foreground},
     )

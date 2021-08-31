@@ -168,4 +168,8 @@ class Onedark(base.Theme):
         lCursor={"fg": "NONE", "bg": "NONE", "style": "reverse"},
         vCursor={"fg": "NONE", "bg": "NONE", "style": "reverse"},
     )
-    nvim_plugins = base.NeovimPluginTheme()
+    nvim_plugins = base.NeovimPluginTheme(
+        NvimTreeFolderName={"fg": foreground},
+        NvimTreeEmptyFolderName={"fg": bg_brighter},
+        NvimTreeOpenedFolderName={"fg": foreground},
+    )
