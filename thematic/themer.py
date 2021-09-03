@@ -30,6 +30,7 @@ class Themer:
     @cached_property
     def apps(self) -> List[App]:
         apps = filter(self._is_theme_module, resources.contents("thematic.apps"))
+        # don't include the ".py" when importing
         modules = [importlib.import_module(f"thematic.apps.{app[:-3]}").App for app in apps]
         return [app for app in modules if OPERATING_SYSTEM in app.supported_oses]
 

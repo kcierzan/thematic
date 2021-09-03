@@ -7,13 +7,13 @@ from thematic.constants import FONTS, SEPARATORS
 from thematic.themer import Themer
 
 app = typer.Typer()
+themer = Themer()
 
 
 @app.command()
 def colors(theme: str) -> None:
     if theme == "":
         return
-    themer = Themer()
     if theme not in themer.themes:
         typer.echo(f"Colorscheme '{theme}' not found. Enter one of the following:")
         for theme in themer.themes:
@@ -31,7 +31,6 @@ def bars(separator_style: str) -> None:
         for bar in SEPARATORS.keys():
             typer.echo(bar)
         return
-    themer = Themer()
     asyncio.run(themer.set_bars(separator_style))
 
 
@@ -44,7 +43,6 @@ def font(font: str) -> None:
         for f in FONTS.keys():
             typer.echo(f)
         return
-    themer = Themer()
     asyncio.run(themer.set_font(font))
 
 
@@ -54,7 +52,7 @@ def list(option: str) -> None:
         for font in FONTS.keys():
             typer.echo(font)
     elif option == "colors":
-        for theme in Themer().themes:
+        for theme in themer.themes:
             typer.echo(theme)
     elif option == "bars":
         for separator in SEPARATORS.keys():
