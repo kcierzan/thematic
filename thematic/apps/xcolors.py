@@ -5,7 +5,7 @@ from thematic.apps import base
 from thematic.themes import base as base_theme
 
 
-class Xcolors(base.App):
+class App(base.App):
     supported_oses = {"linux", "darwin"}
     config_file = ".Xresources"
     theme_file = "thematic-xcolors"

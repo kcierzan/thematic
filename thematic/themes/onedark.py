@@ -1,8 +1,7 @@
 from thematic.themes import base
 
 
-class Onedark(base.Theme):
-    name = "onedark"
+class Theme(base.Theme):
     foreground = "#B2BED1"
     background = "#2c2e34"
     bg_bright = "#303339"
@@ -172,4 +171,5 @@ class Onedark(base.Theme):
         NvimTreeFolderName={"fg": foreground},
         NvimTreeEmptyFolderName={"fg": bg_brighter},
         NvimTreeOpenedFolderName={"fg": foreground},
+        CocUnusedHighlight={"fg": bg_brighter},
     )

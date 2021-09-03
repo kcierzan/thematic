@@ -2,7 +2,7 @@ from thematic.themes import base as base_theme
 from thematic.apps import base
 
 
-class Galaxyline(base.App):
+class App(base.App):
     @staticmethod
     async def reload() -> None:
         ...

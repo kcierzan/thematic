@@ -1,9 +1,7 @@
 from thematic.themes import base
 
 
-class Indo(base.Theme):
-    name = "indo"
-
+class Theme(base.Theme):
     background = "#2a2c3a"
     foreground = "#eeeeee"
     bg_bright = "#333446"

@@ -2,7 +2,7 @@ from thematic.themes import base as base_theme
 from thematic.apps import base
 
 
-class Zsh(base.App):
+class App(base.App):
     supported_oses = {"linux", "darwin"}
     config_file = ".zshenv"
     theme_file = "theme.zsh"

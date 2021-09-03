@@ -3,7 +3,7 @@ from thematic.themes import base as base_theme
 from thematic.apps import base
 
 
-class Tmux(base.App):
+class App(base.App):
     supported_oses = {"linux", "darwin"}
     config_file = ".tmux.conf"
     theme_file = "theme.conf"

@@ -9,7 +9,7 @@ from thematic.apps import base
 from thematic.constants import ALACRITTY_CONFIG, FONTS
 
 
-class Alacritty(base.App):
+class App(base.App):
     supported_oses = {"darwin"}
 
     @staticmethod

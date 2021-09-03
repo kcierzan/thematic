@@ -3,7 +3,7 @@ from thematic.themes import base as base_theme
 from thematic.util import call_with_shell
 
 
-class Awesomewm(base.App):
+class App(base.App):
     supported_oses = {"linux"}
 
     @staticmethod

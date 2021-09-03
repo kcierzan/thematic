@@ -1,9 +1,7 @@
 from thematic.themes import base
 
 
-class SolarizedDark(base.Theme):
-    name = "solarized-dark"
-
+class Theme(base.Theme):
     foreground = "#839496"
     background = "#002b36"
     bg_bright = "#003240"

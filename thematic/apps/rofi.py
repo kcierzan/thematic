@@ -2,7 +2,7 @@ from thematic.apps import base
 from thematic.themes import base as base_theme
 
 
-class Rofi(base.App):
+class App(base.App):
     @staticmethod
     async def set_theme(_: base_theme.Theme) -> None:
         ...

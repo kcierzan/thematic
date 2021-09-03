@@ -3,7 +3,7 @@ from thematic.apps import base
 from thematic.themes import base as base_theme
 
 
-class Alfred(base.App):
+class App(base.App):
     supported_oses = {"darwin"}
 
     @staticmethod

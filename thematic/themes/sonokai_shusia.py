@@ -1,9 +1,7 @@
 from thematic.themes import base
 
 
-class SonokaiShusia(base.Theme):
-    name = "sonokai-shusia"
-
+class Theme(base.Theme):
     foreground = "#E3E1E4"
     background = "#2D2A2E"
     bg_bright = "#343136"

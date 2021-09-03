@@ -354,6 +354,7 @@ class NeovimPluginTheme:
     pythonBuiltin: Dict[str, str] = field(default_factory=dict)
     pythonExceptions: Dict[str, str] = field(default_factory=dict)
     pythonDecoratorName: Dict[str, str] = field(default_factory=dict)
+    CocUnusedHighlight: Dict[str, str] = field(default_factory=dict)
 
 class Theme:
     name = ""

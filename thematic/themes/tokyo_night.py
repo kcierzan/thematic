@@ -1,8 +1,7 @@
 from thematic.themes import base
 
 
-class TokyoNight(base.Theme):
-    name = "tokyo-night"
+class Theme(base.Theme):
     bg_dark = "#1f2335"
     background = "#24283b"
     bg_bright = "#292e42"

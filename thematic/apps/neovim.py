@@ -7,7 +7,7 @@ from thematic.apps import base
 from thematic.constants import NVIM_SOCKET
 
 
-class Neovim(base.App):
+class App(base.App):
     supported_oses = {"darwin", "linux"}
     config_file = ".config/nvim/init.vim"
     theme_file = "nvim-theme.lua"
@@ -340,6 +340,7 @@ local plugins = {
     pythonBuiltin = { {{pythonBuiltin}} };
     pythonExceptions = { {{pythonExceptions}} };
     pythonDecoratorName = { {{pythonDecoratorName}} };
+    CocUnusedHighlight = { {{CocUnusedHighlight}} };
 }
 return syntax, plugins
     """

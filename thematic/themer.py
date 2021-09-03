@@ -1,51 +1,48 @@
 import asyncio
+from functools import cached_property
+import importlib
+from importlib import resources
 import os
+from typing import List
+from types import ModuleType
 
 import aiofiles
 from jinja2 import Template
 import typer
 
-from thematic.apps.alacritty import Alacritty
-from thematic.apps.alfred import Alfred
-from thematic.apps.awesome import Awesomewm
 from thematic.apps.base import App
-from thematic.apps.galaxyline import Galaxyline
-from thematic.apps.neovim import Neovim
-from thematic.apps.rofi import Rofi
-from thematic.apps.tmux import Tmux
-from thematic.apps.xcolors import Xcolors
-from thematic.apps.zsh import Zsh
 from thematic.constants import OPERATING_SYSTEM, SEPARATORS
-from thematic.themes.dracula import Dracula
-from thematic.themes.gruvbox_dark import GruvboxDark
-from thematic.themes.indo import Indo
-from thematic.themes.onedark import Onedark
-from thematic.themes.tokyo_night import TokyoNight
 
 
 class Themer:
-
-    themes = {theme.name: theme for theme in (Onedark, GruvboxDark, Indo, TokyoNight, Dracula)}
-
     def __init__(self):
-        apps = (
-            Alfred,
-            Awesomewm,
-            Neovim,
-            Galaxyline,
-            Tmux,
-            Rofi,
-            Zsh,
-            Xcolors,
-            Alacritty,
-        )
-        self.apps = [app() for app in apps if OPERATING_SYSTEM in app.supported_oses]
         self.output_dir = os.path.join(os.path.expanduser("~"), ".thematic")
 
-    async def set_bars(self, separator_type: str):
+    @staticmethod
+    def _is_theme_module(filename: str) -> bool:
+        return filename.endswith(".py") and not filename.startswith("_") and filename != "base.py"
+    
+    @cached_property
+    def themes(self) -> List[str]:
+        themes = filter(self._is_theme_module, resources.contents("thematic.themes"))
+        return [theme[:-3] for theme in themes]
+
+    @cached_property
+    def apps(self) -> List[App]:
+        apps = filter(self._is_theme_module, resources.contents("thematic.apps"))
+        modules = [importlib.import_module(f"thematic.apps.{app[:-3]}").App for app in apps]
+        return [app for app in modules if OPERATING_SYSTEM in app.supported_oses]
+
+    def _import_theme(self, theme) -> ModuleType:
+        return importlib.import_module(f"thematic.themes.{theme}")
+
+    def _import_app(self, app: str) -> ModuleType:
+        return importlib.import_module(f"thematic.apps.{app}")
+        
+    async def set_bars(self, separator_type: str) -> None:
         self._maybe_create_output_directory()
 
-        async def safe_render(app: App):
+        async def safe_render(app: App) -> None:
             if not (app.bar_template and app.bar_file):
                 return
             await self._render_file(
@@ -59,21 +56,22 @@ class Themer:
             *[app.reload() for app in self.apps],
         )
 
-    async def set_theme(self, theme: str):
+    async def set_theme(self, theme: str) -> None:
         self._maybe_create_output_directory()
+        theme_module = self._import_theme(theme)
 
         async def safe_render(app: App):
             if not (app.theme_template and app.theme_file):
                 return
             await self._render_file(
                 app.theme_template,
-                self.themes[theme].asdict(),
+                theme_module.Theme.asdict(),
                 os.path.join(self.output_dir, app.theme_file),
             )
 
         await asyncio.gather(
             *[safe_render(app) for app in self.apps],
-            *[app.set_theme(self.themes[theme]) for app in self.apps],
+            *[app.set_theme(theme_module.Theme) for app in self.apps],
             *[app.reload() for app in self.apps],
         )
 
