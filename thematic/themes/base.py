@@ -363,6 +363,8 @@ class Theme:
     bg_bright = ""
     bg_brighter = ""
     bg_brightest = ""
+    cursor = ""
+    cursor_text = ""
     xcolors = Xcolors(
         foreground="",
         background="",

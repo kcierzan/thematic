@@ -24,6 +24,8 @@ class Theme(base.Theme):
     blue_bright = "#71bdf2"
     purple_bright = "#a9a1e1"
     white_bright = "#afb0b5"
+    cursor = "#528bff"
+    cursor_text = background
 
     autosuggestions = "238"
     tmux_mode_fg = blue

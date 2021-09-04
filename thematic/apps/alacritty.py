@@ -10,7 +10,7 @@ from thematic.constants import ALACRITTY_CONFIG, FONTS
 
 
 class App(base.App):
-    supported_oses = {"darwin"}
+    supported_oses = {"darwin", "linux"}
 
     @staticmethod
     async def reload() -> None:
@@ -71,6 +71,10 @@ class App(base.App):
                     "cyan":theme.xcolors.xcolors_14,
                     "white":theme.xcolors.xcolors_15,
                 },
+                "cursor": {
+                    "cursor":theme.cursor,
+                    "text":theme.cursor_text,
+                }
             }
         }
         current.update(new_colors)

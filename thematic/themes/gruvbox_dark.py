@@ -19,6 +19,9 @@ class Theme(base.Theme):
     white = "#d4be98"
     white_bright = "#a89984"
 
+    cursor = orange
+    cursor_text = background
+
     autosuggestions = "238"
     tmux_mode_fg = orange
 

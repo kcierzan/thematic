@@ -3,8 +3,8 @@ from functools import cached_property
 import importlib
 from importlib import resources
 import os
-from typing import List
 from types import ModuleType
+from typing import List
 
 import aiofiles
 from jinja2 import Template
@@ -15,32 +15,55 @@ from thematic.constants import OPERATING_SYSTEM, SEPARATORS
 
 
 class Themer:
+    """
+    The core theming class that applies themes to apps.
+    
+    This is accomplished, wherever possible, by generating files that are sourced the themeable applications.
+    """
     def __init__(self):
         self.output_dir = os.path.join(os.path.expanduser("~"), ".thematic")
 
     @staticmethod
     def _is_theme_module(filename: str) -> bool:
+        """
+        Test that a filename is a relevant themer file ('app' or 'theme')
+        """
         return filename.endswith(".py") and not filename.startswith("_") and filename != "base.py"
-    
+
     @cached_property
-    def themes(self) -> List[str]:
+    def theme_names(self) -> List[str]:
+        """
+        A list of installed theme names
+        """
         themes = filter(self._is_theme_module, resources.contents("thematic.themes"))
         return [theme[:-3] for theme in themes]
 
     @cached_property
     def apps(self) -> List[App]:
+        """
+        A list of themeable app modules compatible with the current OS
+        """
         apps = filter(self._is_theme_module, resources.contents("thematic.apps"))
         # don't include the ".py" when importing
         modules = [importlib.import_module(f"thematic.apps.{app[:-3]}").App for app in apps]
         return [app for app in modules if OPERATING_SYSTEM in app.supported_oses]
 
     def _import_theme(self, theme) -> ModuleType:
+        """
+        Import a theme and return the module
+        """
         return importlib.import_module(f"thematic.themes.{theme}")
 
     def _import_app(self, app: str) -> ModuleType:
+        """
+        Import an app and return the module
+        """
         return importlib.import_module(f"thematic.apps.{app}")
         
     async def set_bars(self, separator_type: str) -> None:
+        """
+        Change the shape of the "bar" separators used in the terminal
+        """
         self._maybe_create_output_directory()
 
         async def safe_render(app: App) -> None:
@@ -58,6 +81,9 @@ class Themer:
         )
 
     async def set_theme(self, theme: str) -> None:
+        """
+        Sets them system to a single colorscheme
+        """
         self._maybe_create_output_directory()
         theme_module = self._import_theme(theme)
 
@@ -77,9 +103,16 @@ class Themer:
         )
 
     async def set_font(self, font: str) -> None:
+        """
+        Set the system to a single font
+        """
         await asyncio.gather(*[app.set_font(font) for app in self.apps])
 
     def _maybe_create_output_directory(self) -> None:
+        """
+        If required, thematic will generate theme files that can be sourced by themeable apps
+        in ~/.thematic
+        """
         if not os.path.isdir(self.output_dir):
             typer.echo(
                 f"Output directory not found: creating directory at {self.output_dir}"
@@ -94,6 +127,9 @@ class Themer:
     async def _render_file(
         app_template: str, theme_data: dict, output_path: str
     ) -> None:
+        """
+        Generate theme files in the specified directory
+        """
         temp = Template(app_template)
         rendered = temp.render(**theme_data)
         async with aiofiles.open(output_path, "w+") as output:

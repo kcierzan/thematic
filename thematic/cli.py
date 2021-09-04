@@ -14,9 +14,9 @@ themer = Themer()
 def colors(theme: str) -> None:
     if theme == "":
         return
-    if theme not in themer.themes:
+    if theme not in themer.theme_names:
         typer.echo(f"Colorscheme '{theme}' not found. Enter one of the following:")
-        for theme in themer.themes:
+        for theme in themer.theme_names:
             typer.echo(theme)
         return
     asyncio.run(themer.set_theme(theme))
@@ -52,7 +52,7 @@ def list(option: str) -> None:
         for font in FONTS.keys():
             typer.echo(font)
     elif option == "colors":
-        for theme in themer.themes:
+        for theme in themer.theme_names:
             typer.echo(theme)
     elif option == "bars":
         for separator in SEPARATORS.keys():
