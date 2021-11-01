@@ -32,6 +32,9 @@ class Theme(base.Theme):
     red = "#f7768e"
     red1 = "#db4b4b"
 
+    cursor = "#528bff"
+    cursor_text = background
+
     autosuggestions = "238"
     tmux_mode_fg = blue2
 
