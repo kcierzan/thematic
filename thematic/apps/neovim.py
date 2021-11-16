@@ -341,6 +341,14 @@ local plugins = {
     pythonExceptions = { {{pythonExceptions}} };
     pythonDecoratorName = { {{pythonDecoratorName}} };
     CocUnusedHighlight = { {{CocUnusedHighlight}} };
+    markdownH1 = { {{markdownH1}} };
+    markdownH2 = { {{markdownH2}} };
+    markdownH3 = { {{markdownH3}} };
+    markdownH4 = { {{markdownH4}} };
+    htmlH1 = { {{htmlH1}} };
+    htmlH2 = { {{htmlH2}} };
+    htmlH3 = { {{htmlH3}} };
+    htmlH4 = { {{htmlH4}} };
 }
 return syntax, plugins
     """

@@ -181,5 +181,13 @@ class Theme(base.Theme):
         NvimTreeFolderName={"fg": foreground},
         NvimTreeEmptyFolderName={"fg": bg_brighter},
         NvimTreeOpenedFolderName={"fg": foreground},
-        CocUnusedHighlight={"fg": comment}
+        CocUnusedHighlight={"fg": comment},
+        markdownH1={"fg": purple},
+        markdownH2={"fg": orange},
+        markdownH3={"fg": cyan},
+        markdownH4={"fg": teal},
+        htmlH1={"fg": purple},
+        htmlH2={"fg": orange},
+        htmlH3={"fg": cyan},
+        htmlH4={"fg": teal}
     )
