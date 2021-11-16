@@ -1,7 +1,7 @@
 from thematic.themes import base
 
 
-class Dracula(base.Theme):
+class Theme(base.Theme):
     name = "dracula"
 
     foreground = "#f9f9f4"
@@ -22,6 +22,8 @@ class Dracula(base.Theme):
     pink = "#ff92d0"
     white = "#c7c7c7"
     white_bright = "#feffff"
+    cursor = pink
+    cursor_text = background
 
     autosuggestions = "238"
     tmux_mode_fg = green
