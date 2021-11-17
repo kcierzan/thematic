@@ -41,7 +41,7 @@ class Theme(base.Theme):
     xcolors = base.Xcolors(
         foreground=foreground,
         background=background,
-        xcolors_00=black,
+        xcolors_00=bg_dark,
         xcolors_01=red,
         xcolors_02=green,
         xcolors_03=yellow,
@@ -49,7 +49,7 @@ class Theme(base.Theme):
         xcolors_05=purple,
         xcolors_06=cyan,
         xcolors_07=dark5,
-        xcolors_08=bg_brighter,
+        xcolors_08=bg_brightest,
         xcolors_09=red1,
         xcolors_10=green1,
         xcolors_11=orange,
