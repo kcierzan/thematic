@@ -20,7 +20,6 @@ setuptools.setup(
         "typer",
         "neovim-remote",
         "aiofiles",
-        "iterm2; sys_platform == 'darwin'",
     ],
     entry_points={"console_scripts": ["theme=thematic.cli:main"]},
 )
