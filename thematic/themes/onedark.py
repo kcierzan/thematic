@@ -72,9 +72,9 @@ class Theme(base.Theme):
         CursorLine={"fg": "NONE", "bg": bg_bright},
         CursorLineNr={"fg": blue, "bg": bg_bright, "style": "bold"},
         Define={"fg": purple},
-        DiffAdd={"fg": background, "bg": green},
-        DiffChange={"fg": background, "bg": yellow},
-        DiffDelete={"fg": background, "bg": red},
+        DiffAdd={"fg": green, "bg": background },
+        DiffChange={"fg": yellow, "bg": background },
+        DiffDelete={"fg": red, "bg": background },
         DiffText={"fg": background, "bg": foreground},
         Directory={"fg": bg_bright, "bg": "NONE"},
         EndOfBuffer={"fg": background, "bg": "NONE"},
@@ -95,6 +95,7 @@ class Theme(base.Theme):
         MatchParen={"fg": red, "bg": "NONE"},
         ModeMsg={"fg": foreground, "bg": "NONE", "style": "bold"},
         NonText={"fg": bg_bright},
+        Normal={"bg": background},
         NormalFloat={"fg": foreground, "bg": bg_bright},
         Number={"fg": green},
         Operator={"fg": purple},
@@ -174,4 +175,6 @@ class Theme(base.Theme):
         NvimTreeEmptyFolderName={"fg": bg_brighter},
         NvimTreeOpenedFolderName={"fg": foreground},
         CocUnusedHighlight={"fg": bg_brighter},
+        BufferLineSeparator = {"fg": background, "bg": bg_brighter},
+        BufferLineSeparatorSelected = {"fg": background, "bg": bg_brighter}
     )

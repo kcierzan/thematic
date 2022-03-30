@@ -363,6 +363,9 @@ class NeovimPluginTheme:
     pythonExceptions: Dict[str, str] = field(default_factory=dict)
     pythonDecoratorName: Dict[str, str] = field(default_factory=dict)
     CocUnusedHighlight: Dict[str, str] = field(default_factory=dict)
+    BufferLineSeparator: Dict[str, str] = field(default_factory=dict)
+    BufferLineSeparatorSelected: Dict[str, str] = field(default_factory=dict)
+    BufferLineSeparatorVisible: Dict[str, str] = field(default_factory=dict)
 
 class Theme:
     name = ""
@@ -400,7 +403,7 @@ class Theme:
     def to_vim_highlights(vim_theme: Union[NeovimPluginTheme, NeovimTheme]) -> Dict[str, str]:
         vim_highlights = {}
         for key, value in vars(vim_theme).items():
-            vim_highlights[key] = ", ".join("{} = '{}'".format(group, color) for group, color in value.items())
+            vim_highlights[key] = ", ".join(f"{group} = '{color}'" for group, color in value.items())
         return vim_highlights
 
 
@@ -417,5 +420,3 @@ class Theme:
             **cls.to_vim_highlights(cls.nvim_core),
             **cls.to_vim_highlights(cls.nvim_plugins)
         }
-
-

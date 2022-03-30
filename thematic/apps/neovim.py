@@ -349,6 +349,9 @@ local plugins = {
     htmlH2 = { {{htmlH2}} };
     htmlH3 = { {{htmlH3}} };
     htmlH4 = { {{htmlH4}} };
+    BufferLineSeparator = { {{BufferLineSeparator}} };
+    BufferLineSeparatorSelected = { {{BufferLineSeparatorSelected}} };
+    BufferLineSeparatorVisible = { {{BufferLineSeparatorVisible}} };
 }
 return syntax, plugins
     """
